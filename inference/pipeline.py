@@ -80,12 +80,15 @@ class VehiclePipeline:
             if feat is None:
                 feat = zs.encode_image(crop_bgr)
             if kind == "viewpoint":
-                labels = list(VIEW_PROMPTS)
+                # rank only real orientations; UNKNOWN is a fallback, not a candidate
+                labels = [v for v in VIEWPOINT if v != "UNKNOWN"]
                 top = zs.rank_with(feat, [VIEW_PROMPTS[l] for l in labels], labels, k=min(k, 3))
+                if not top or top[0][1] < 0.25:
+                    return [("UNKNOWN", 1.0)], np.array([1.0]), True
             elif kind == "body":
                 top = zs.rank_with(feat, [BODY_PROMPTS.get(l, f"a {l}") for l in classes], classes, k)
             elif kind == "make":
-                top = zs.rank_with(feat, [f"a photo of a {m} car brand vehicle" for m in classes], classes, k)
+                top = zs.rank_with(feat, [f"a {m} car" for m in classes], classes, k)
             else:
                 top = zs.rank_with(feat, [f"a photo of a {m} car" for m in classes], classes, k)
             p = np.zeros(max(len(classes), 1))
@@ -142,6 +145,23 @@ class VehiclePipeline:
             else:
                 view_top, _, ok = self._zs_head(c["full"], VIEWPOINT, "viewpoint", k=3, feat=zfeat)
                 zs_used = zs_used or ok
+            # badge/logo evidence (gate frames: emblem often clearly visible)
+            badge_top: list[tuple[str, float]] = []
+            if not self.make_clf.available and zfeat is not None:
+                try:
+                    from .badge import BadgeReader
+                    badge_top = BadgeReader(self.zero_shot).read_make(
+                        c["full"], self.make_clf.classes, k=5)
+                except Exception:
+                    badge_top = []
+            if badge_top and badge_top[0][0] != "Unknown" and badge_top[0][1] >= 0.40:
+                bmake, bprob = badge_top[0]
+                head_prob = dict(make_top).get(bmake, 0.0)
+                make_top = [(bmake, 0.5 * bprob + 0.5 * head_prob)] + [
+                    (l, p) for l, p in make_top if l != bmake][:4]
+                reasons_badge = [f"emblem reads {bmake}"]
+            else:
+                reasons_badge = []
             try:
                 vec = self.embed.extract(rgb)
                 nn = self.store.search(vec, k=5)
@@ -177,6 +197,12 @@ class VehiclePipeline:
                 reasons = ["classifiers untrained — see docs/TRAINING.md"] + reasons
             if nn_error:
                 reasons = [f"retrieval unavailable: {nn_error}"] + reasons
+            reasons = reasons_badge + reasons
+            # alternatives: same-make confusions first (most likely look-alikes)
+            mk_name = make_top[0][0]
+            alt_pool = list(fused[1:6])
+            same = [x for x in alt_pool if x[0] == mk_name or x[0].startswith(mk_name + " ")]
+            alt_ordered = (same + [x for x in alt_pool if x not in same])[:3]
             vehicles.append({
                 "id": i + 1, "box": c["box"], "det_conf": round(float(c["conf_det"]), 3),
                 "evidence_source": "trained" if trained else ("zero-shot-clip" if zs_used else "none"),
@@ -186,7 +212,7 @@ class VehiclePipeline:
                 "body_type": body_top[0][0], "body_conf": round(float(body_top[0][1]), 4),
                 "orientation": view_top[0][0],
                 "status": status,
-                "alternatives": [{"label": l, "confidence": round(float(p), 4)} for l, p in fused[1:4]],
+                "alternatives": [{"label": l, "confidence": round(float(p), 4)} for l, p in alt_ordered],
                 "nn_similarity": round(float(nn_sim), 4),
                 "entropy": round(float(ent), 3),
                 "abstain_reasons": reasons,
