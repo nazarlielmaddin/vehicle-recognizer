@@ -121,4 +121,48 @@ EXTRA_ENTRIES: list[tuple[str, str, str]] = [
     ("Saipa", "Tiba", "Sedan"), ("Saipa", "Quick", "Hatchback"), ("Saipa", "Pride", "Sedan"),
     # --- ZAZ ---
     ("ZAZ", "Chance", "Sedan"), ("ZAZ", "Slavuta", "Hatchback"), ("ZAZ", "Tavria", "Hatchback"),
+    # --- Changan ---
+    ("Changan", "Alsvin", "Sedan"), ("Changan", "Eado", "Sedan"),
+    ("Changan", "Benben", "Hatchback"), ("Changan", "Lumin", "Hatchback"),
+    ("Changan", "CS15", "SUV"), ("Changan", "CS35", "SUV"), ("Changan", "CS55", "SUV"),
+    ("Changan", "CS75", "SUV"), ("Changan", "CS85", "SUV"), ("Changan", "CS95", "SUV"),
+    ("Changan", "UNI-T", "SUV"), ("Changan", "UNI-K", "SUV"), ("Changan", "UNI-V", "Sedan"),
+    ("Changan", "Hunter", "Pickup"),
+    # --- BYD ---
+    ("BYD", "Song", "SUV"), ("BYD", "Tang", "SUV"), ("BYD", "Han", "Sedan"),
+    ("BYD", "Qin", "Sedan"), ("BYD", "Atto 3", "SUV"), ("BYD", "Dolphin", "Hatchback"),
+    ("BYD", "Seagull", "Hatchback"), ("BYD", "Yuan", "SUV"),
+    # --- MG ---
+    ("MG", "MG3", "Hatchback"), ("MG", "MG5", "Sedan"), ("MG", "MG6", "Sedan"),
+    ("MG", "ZS", "SUV"), ("MG", "HS", "SUV"), ("MG", "RX5", "SUV"), ("MG", "Gloster", "SUV"),
+    # --- JAC / Jetour / Exeed / Omoda / DFSK ---
+    ("JAC", "J7", "Sedan"), ("JAC", "JS4", "SUV"), ("JAC", "S3", "SUV"),
+    ("JAC", "S5", "SUV"), ("JAC", "T8", "Pickup"),
+    ("Jetour", "X70", "SUV"), ("Jetour", "X90", "SUV"),
+    ("Jetour", "Dashing", "SUV"), ("Jetour", "T2", "SUV"),
+    ("Exeed", "LX", "SUV"), ("Exeed", "TXL", "SUV"), ("Exeed", "VX", "SUV"),
+    ("Omoda", "C5", "SUV"), ("Omoda", "S5", "Sedan"),
+    ("DFSK", "Glory 580", "SUV"),
+    # --- Dongfeng / FAW / Hongqi / BAIC ---
+    ("Dongfeng", "AX7", "SUV"), ("Dongfeng", "Aeolus", "Sedan"),
+    ("FAW", "B70", "Sedan"), ("FAW", "T99", "SUV"), ("FAW", "X40", "SUV"),
+    ("Hongqi", "H5", "Sedan"), ("Hongqi", "H9", "Sedan"), ("Hongqi", "HS5", "SUV"),
+    ("BAIC", "X35", "SUV"), ("BAIC", "X55", "SUV"), ("BAIC", "BJ40", "SUV"),
+    # --- Zeekr / Li Auto / NIO / XPeng / Wuling ---
+    ("Zeekr", "001", "Wagon"), ("Zeekr", "X", "SUV"), ("Zeekr", "009", "MPV"),
+    ("Li Auto", "L7", "SUV"), ("Li Auto", "L8", "SUV"), ("Li Auto", "L9", "SUV"),
+    ("NIO", "ES6", "SUV"), ("NIO", "ES8", "SUV"), ("NIO", "ET5", "Sedan"), ("NIO", "ET7", "Sedan"),
+    ("XPeng", "P7", "Sedan"), ("XPeng", "G6", "SUV"), ("XPeng", "G9", "SUV"),
+    ("Wuling", "Hongguang", "MPV"), ("Wuling", "Mini", "Hatchback"),
+    # --- Chery / Geely / Haval expansion ---
+    ("Chery", "Tiggo 2", "SUV"), ("Chery", "Tiggo 3", "SUV"), ("Chery", "Tiggo 9", "SUV"),
+    ("Geely", "Tugella", "SUV"), ("Geely", "Monjaro", "SUV"), ("Geely", "Preface", "Sedan"),
+    ("Haval", "H2", "SUV"), ("Haval", "H9", "SUV"), ("Haval", "Dargo", "SUV"),
+    # --- Moskvich (revived, common in region) ---
+    ("Moskvich", "3", "SUV"), ("Moskvich", "6", "Sedan"),
+    # --- other gaps ---
+    ("Lada", "Niva Travel", "SUV"),
+    ("BMW", "iX", "SUV"),
+    ("Chevrolet", "Onix", "Sedan"), ("Chevrolet", "Tracker", "SUV"),
+    ("Toyota", "Corolla Cross", "SUV"),
 ]

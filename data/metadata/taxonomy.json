@@ -1,31 +1,46 @@
 {
   "makes": [
     "Audi",
+    "BAIC",
     "BMW",
+    "BYD",
+    "Changan",
     "Chery",
     "Chevrolet",
     "Citroen",
+    "DFSK",
     "Dacia",
     "Daewoo",
+    "Dongfeng",
+    "Exeed",
+    "FAW",
     "Fiat",
     "Ford",
     "GAZ",
     "Geely",
     "Haval",
     "Honda",
+    "Hongqi",
     "Hyundai",
     "Infiniti",
     "Iran Khodro",
+    "JAC",
     "Jeep",
+    "Jetour",
     "Kia",
     "Lada",
     "Land Rover",
     "Lexus",
+    "Li Auto",
     "Lifan",
+    "MG",
     "Mazda",
     "Mercedes-Benz",
     "Mitsubishi",
+    "Moskvich",
+    "NIO",
     "Nissan",
+    "Omoda",
     "Opel",
     "Peugeot",
     "Porsche",
@@ -40,7 +55,10 @@
     "UAZ",
     "Volkswagen",
     "Volvo",
-    "ZAZ"
+    "Wuling",
+    "XPeng",
+    "ZAZ",
+    "Zeekr"
   ],
   "models": [
     "Audi A3",
@@ -53,6 +71,9 @@
     "Audi Q5",
     "Audi Q7",
     "Audi Q8",
+    "BAIC BJ40",
+    "BAIC X35",
+    "BAIC X55",
     "BMW 1 Series",
     "BMW 2 Series",
     "BMW 3 Series",
@@ -66,11 +87,37 @@
     "BMW X5",
     "BMW X6",
     "BMW X7",
+    "BMW iX",
+    "BYD Atto 3",
+    "BYD Dolphin",
+    "BYD Han",
+    "BYD Qin",
+    "BYD Seagull",
+    "BYD Song",
+    "BYD Tang",
+    "BYD Yuan",
+    "Changan Alsvin",
+    "Changan Benben",
+    "Changan CS15",
+    "Changan CS35",
+    "Changan CS55",
+    "Changan CS75",
+    "Changan CS85",
+    "Changan CS95",
+    "Changan Eado",
+    "Changan Hunter",
+    "Changan Lumin",
+    "Changan UNI-K",
+    "Changan UNI-T",
+    "Changan UNI-V",
     "Chery Arrizo 5",
     "Chery Bonus",
+    "Chery Tiggo 2",
+    "Chery Tiggo 3",
     "Chery Tiggo 4",
     "Chery Tiggo 7",
     "Chery Tiggo 8",
+    "Chery Tiggo 9",
     "Chevrolet Aveo",
     "Chevrolet Captiva",
     "Chevrolet Cobalt",
@@ -79,18 +126,29 @@
     "Chevrolet Lacetti",
     "Chevrolet Malibu",
     "Chevrolet Nexia",
+    "Chevrolet Onix",
     "Chevrolet Spark",
     "Chevrolet Tahoe",
+    "Chevrolet Tracker",
     "Citroen Berlingo",
     "Citroen C-Elysee",
     "Citroen C3",
     "Citroen C4",
+    "DFSK Glory 580",
     "Dacia Duster",
     "Dacia Logan",
     "Dacia Sandero",
     "Daewoo Gentra",
     "Daewoo Matiz",
     "Daewoo Nexia",
+    "Dongfeng AX7",
+    "Dongfeng Aeolus",
+    "Exeed LX",
+    "Exeed TXL",
+    "Exeed VX",
+    "FAW B70",
+    "FAW T99",
+    "FAW X40",
     "Fiat 500",
     "Fiat Doblo",
     "Fiat Egea",
@@ -109,14 +167,23 @@
     "Geely Atlas",
     "Geely Coolray",
     "Geely Emgrand",
+    "Geely Monjaro",
+    "Geely Preface",
+    "Geely Tugella",
+    "Haval Dargo",
     "Haval F7",
+    "Haval H2",
     "Haval H6",
+    "Haval H9",
     "Haval Jolion",
     "Honda Accord",
     "Honda CR-V",
     "Honda Civic",
     "Honda HR-V",
     "Honda Pilot",
+    "Hongqi H5",
+    "Hongqi H9",
+    "Hongqi HS5",
     "Hyundai Accent",
     "Hyundai Creta",
     "Hyundai Elantra",
@@ -134,10 +201,19 @@
     "Iran Khodro Peugeot 405",
     "Iran Khodro Runna",
     "Iran Khodro Samand",
+    "JAC J7",
+    "JAC JS4",
+    "JAC S3",
+    "JAC S5",
+    "JAC T8",
     "Jeep Cherokee",
     "Jeep Compass",
     "Jeep Grand Cherokee",
     "Jeep Wrangler",
+    "Jetour Dashing",
+    "Jetour T2",
+    "Jetour X70",
+    "Jetour X90",
     "Kia Carnival",
     "Kia Ceed",
     "Kia Cerato",
@@ -154,6 +230,7 @@
     "Lada Kalina",
     "Lada Largus",
     "Lada Niva",
+    "Lada Niva Travel",
     "Lada Priora",
     "Lada Vesta",
     "Lada XRAY",
@@ -170,9 +247,19 @@
     "Lexus LX",
     "Lexus NX",
     "Lexus RX",
+    "Li Auto L7",
+    "Li Auto L8",
+    "Li Auto L9",
     "Lifan Solano",
     "Lifan X50",
     "Lifan X60",
+    "MG Gloster",
+    "MG HS",
+    "MG MG3",
+    "MG MG5",
+    "MG MG6",
+    "MG RX5",
+    "MG ZS",
     "Mazda CX-30",
     "Mazda CX-5",
     "Mazda CX-9",
@@ -196,6 +283,12 @@
     "Mitsubishi Outlander",
     "Mitsubishi Pajero",
     "Mitsubishi Pajero Sport",
+    "Moskvich 3",
+    "Moskvich 6",
+    "NIO ES6",
+    "NIO ES8",
+    "NIO ET5",
+    "NIO ET7",
     "Nissan Almera",
     "Nissan Juke",
     "Nissan Leaf",
@@ -207,6 +300,8 @@
     "Nissan Teana",
     "Nissan Tiida",
     "Nissan X-Trail",
+    "Omoda C5",
+    "Omoda S5",
     "Opel Astra",
     "Opel Corsa",
     "Opel Insignia",
@@ -262,6 +357,7 @@
     "Toyota C-HR",
     "Toyota Camry",
     "Toyota Corolla",
+    "Toyota Corolla Cross",
     "Toyota Fortuner",
     "Toyota Highlander",
     "Toyota Hilux",
@@ -289,9 +385,17 @@
     "Volvo XC40",
     "Volvo XC60",
     "Volvo XC90",
+    "Wuling Hongguang",
+    "Wuling Mini",
+    "XPeng G6",
+    "XPeng G9",
+    "XPeng P7",
     "ZAZ Chance",
     "ZAZ Slavuta",
-    "ZAZ Tavria"
+    "ZAZ Tavria",
+    "Zeekr 001",
+    "Zeekr 009",
+    "Zeekr X"
   ],
   "detail": {
     "Toyota": {
@@ -370,6 +474,13 @@
           "make": "Toyota",
           "model": "Avalon",
           "body_type": "Sedan"
+        }
+      ],
+      "Corolla Cross": [
+        {
+          "make": "Toyota",
+          "model": "Corolla Cross",
+          "body_type": "SUV"
         }
       ]
     },
@@ -462,6 +573,13 @@
         {
           "make": "BMW",
           "model": "X7",
+          "body_type": "SUV"
+        }
+      ],
+      "iX": [
+        {
+          "make": "BMW",
+          "model": "iX",
           "body_type": "SUV"
         }
       ]
@@ -621,6 +739,13 @@
           "make": "Lada",
           "model": "2107",
           "body_type": "Sedan"
+        }
+      ],
+      "Niva Travel": [
+        {
+          "make": "Lada",
+          "model": "Niva Travel",
+          "body_type": "SUV"
         }
       ]
     },
@@ -1482,6 +1607,20 @@
           "model": "Equinox",
           "body_type": "SUV"
         }
+      ],
+      "Onix": [
+        {
+          "make": "Chevrolet",
+          "model": "Onix",
+          "body_type": "Sedan"
+        }
+      ],
+      "Tracker": [
+        {
+          "make": "Chevrolet",
+          "model": "Tracker",
+          "body_type": "SUV"
+        }
       ]
     },
     "Ravon": {
@@ -1764,6 +1903,27 @@
           "model": "Bonus",
           "body_type": "Sedan"
         }
+      ],
+      "Tiggo 2": [
+        {
+          "make": "Chery",
+          "model": "Tiggo 2",
+          "body_type": "SUV"
+        }
+      ],
+      "Tiggo 3": [
+        {
+          "make": "Chery",
+          "model": "Tiggo 3",
+          "body_type": "SUV"
+        }
+      ],
+      "Tiggo 9": [
+        {
+          "make": "Chery",
+          "model": "Tiggo 9",
+          "body_type": "SUV"
+        }
       ]
     },
     "Haval": {
@@ -1787,6 +1947,27 @@
           "model": "F7",
           "body_type": "SUV"
         }
+      ],
+      "H2": [
+        {
+          "make": "Haval",
+          "model": "H2",
+          "body_type": "SUV"
+        }
+      ],
+      "H9": [
+        {
+          "make": "Haval",
+          "model": "H9",
+          "body_type": "SUV"
+        }
+      ],
+      "Dargo": [
+        {
+          "make": "Haval",
+          "model": "Dargo",
+          "body_type": "SUV"
+        }
       ]
     },
     "Geely": {
@@ -1808,6 +1989,27 @@
         {
           "make": "Geely",
           "model": "Emgrand",
+          "body_type": "Sedan"
+        }
+      ],
+      "Tugella": [
+        {
+          "make": "Geely",
+          "model": "Tugella",
+          "body_type": "SUV"
+        }
+      ],
+      "Monjaro": [
+        {
+          "make": "Geely",
+          "model": "Monjaro",
+          "body_type": "SUV"
+        }
+      ],
+      "Preface": [
+        {
+          "make": "Geely",
+          "model": "Preface",
           "body_type": "Sedan"
         }
       ]
@@ -2116,6 +2318,546 @@
           "make": "ZAZ",
           "model": "Tavria",
           "body_type": "Hatchback"
+        }
+      ]
+    },
+    "Changan": {
+      "Alsvin": [
+        {
+          "make": "Changan",
+          "model": "Alsvin",
+          "body_type": "Sedan"
+        }
+      ],
+      "Eado": [
+        {
+          "make": "Changan",
+          "model": "Eado",
+          "body_type": "Sedan"
+        }
+      ],
+      "Benben": [
+        {
+          "make": "Changan",
+          "model": "Benben",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Lumin": [
+        {
+          "make": "Changan",
+          "model": "Lumin",
+          "body_type": "Hatchback"
+        }
+      ],
+      "CS15": [
+        {
+          "make": "Changan",
+          "model": "CS15",
+          "body_type": "SUV"
+        }
+      ],
+      "CS35": [
+        {
+          "make": "Changan",
+          "model": "CS35",
+          "body_type": "SUV"
+        }
+      ],
+      "CS55": [
+        {
+          "make": "Changan",
+          "model": "CS55",
+          "body_type": "SUV"
+        }
+      ],
+      "CS75": [
+        {
+          "make": "Changan",
+          "model": "CS75",
+          "body_type": "SUV"
+        }
+      ],
+      "CS85": [
+        {
+          "make": "Changan",
+          "model": "CS85",
+          "body_type": "SUV"
+        }
+      ],
+      "CS95": [
+        {
+          "make": "Changan",
+          "model": "CS95",
+          "body_type": "SUV"
+        }
+      ],
+      "UNI-T": [
+        {
+          "make": "Changan",
+          "model": "UNI-T",
+          "body_type": "SUV"
+        }
+      ],
+      "UNI-K": [
+        {
+          "make": "Changan",
+          "model": "UNI-K",
+          "body_type": "SUV"
+        }
+      ],
+      "UNI-V": [
+        {
+          "make": "Changan",
+          "model": "UNI-V",
+          "body_type": "Sedan"
+        }
+      ],
+      "Hunter": [
+        {
+          "make": "Changan",
+          "model": "Hunter",
+          "body_type": "Pickup"
+        }
+      ]
+    },
+    "BYD": {
+      "Song": [
+        {
+          "make": "BYD",
+          "model": "Song",
+          "body_type": "SUV"
+        }
+      ],
+      "Tang": [
+        {
+          "make": "BYD",
+          "model": "Tang",
+          "body_type": "SUV"
+        }
+      ],
+      "Han": [
+        {
+          "make": "BYD",
+          "model": "Han",
+          "body_type": "Sedan"
+        }
+      ],
+      "Qin": [
+        {
+          "make": "BYD",
+          "model": "Qin",
+          "body_type": "Sedan"
+        }
+      ],
+      "Atto 3": [
+        {
+          "make": "BYD",
+          "model": "Atto 3",
+          "body_type": "SUV"
+        }
+      ],
+      "Dolphin": [
+        {
+          "make": "BYD",
+          "model": "Dolphin",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Seagull": [
+        {
+          "make": "BYD",
+          "model": "Seagull",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Yuan": [
+        {
+          "make": "BYD",
+          "model": "Yuan",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "MG": {
+      "MG3": [
+        {
+          "make": "MG",
+          "model": "MG3",
+          "body_type": "Hatchback"
+        }
+      ],
+      "MG5": [
+        {
+          "make": "MG",
+          "model": "MG5",
+          "body_type": "Sedan"
+        }
+      ],
+      "MG6": [
+        {
+          "make": "MG",
+          "model": "MG6",
+          "body_type": "Sedan"
+        }
+      ],
+      "ZS": [
+        {
+          "make": "MG",
+          "model": "ZS",
+          "body_type": "SUV"
+        }
+      ],
+      "HS": [
+        {
+          "make": "MG",
+          "model": "HS",
+          "body_type": "SUV"
+        }
+      ],
+      "RX5": [
+        {
+          "make": "MG",
+          "model": "RX5",
+          "body_type": "SUV"
+        }
+      ],
+      "Gloster": [
+        {
+          "make": "MG",
+          "model": "Gloster",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "JAC": {
+      "J7": [
+        {
+          "make": "JAC",
+          "model": "J7",
+          "body_type": "Sedan"
+        }
+      ],
+      "JS4": [
+        {
+          "make": "JAC",
+          "model": "JS4",
+          "body_type": "SUV"
+        }
+      ],
+      "S3": [
+        {
+          "make": "JAC",
+          "model": "S3",
+          "body_type": "SUV"
+        }
+      ],
+      "S5": [
+        {
+          "make": "JAC",
+          "model": "S5",
+          "body_type": "SUV"
+        }
+      ],
+      "T8": [
+        {
+          "make": "JAC",
+          "model": "T8",
+          "body_type": "Pickup"
+        }
+      ]
+    },
+    "Jetour": {
+      "X70": [
+        {
+          "make": "Jetour",
+          "model": "X70",
+          "body_type": "SUV"
+        }
+      ],
+      "X90": [
+        {
+          "make": "Jetour",
+          "model": "X90",
+          "body_type": "SUV"
+        }
+      ],
+      "Dashing": [
+        {
+          "make": "Jetour",
+          "model": "Dashing",
+          "body_type": "SUV"
+        }
+      ],
+      "T2": [
+        {
+          "make": "Jetour",
+          "model": "T2",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Exeed": {
+      "LX": [
+        {
+          "make": "Exeed",
+          "model": "LX",
+          "body_type": "SUV"
+        }
+      ],
+      "TXL": [
+        {
+          "make": "Exeed",
+          "model": "TXL",
+          "body_type": "SUV"
+        }
+      ],
+      "VX": [
+        {
+          "make": "Exeed",
+          "model": "VX",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Omoda": {
+      "C5": [
+        {
+          "make": "Omoda",
+          "model": "C5",
+          "body_type": "SUV"
+        }
+      ],
+      "S5": [
+        {
+          "make": "Omoda",
+          "model": "S5",
+          "body_type": "Sedan"
+        }
+      ]
+    },
+    "DFSK": {
+      "Glory 580": [
+        {
+          "make": "DFSK",
+          "model": "Glory 580",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Dongfeng": {
+      "AX7": [
+        {
+          "make": "Dongfeng",
+          "model": "AX7",
+          "body_type": "SUV"
+        }
+      ],
+      "Aeolus": [
+        {
+          "make": "Dongfeng",
+          "model": "Aeolus",
+          "body_type": "Sedan"
+        }
+      ]
+    },
+    "FAW": {
+      "B70": [
+        {
+          "make": "FAW",
+          "model": "B70",
+          "body_type": "Sedan"
+        }
+      ],
+      "T99": [
+        {
+          "make": "FAW",
+          "model": "T99",
+          "body_type": "SUV"
+        }
+      ],
+      "X40": [
+        {
+          "make": "FAW",
+          "model": "X40",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Hongqi": {
+      "H5": [
+        {
+          "make": "Hongqi",
+          "model": "H5",
+          "body_type": "Sedan"
+        }
+      ],
+      "H9": [
+        {
+          "make": "Hongqi",
+          "model": "H9",
+          "body_type": "Sedan"
+        }
+      ],
+      "HS5": [
+        {
+          "make": "Hongqi",
+          "model": "HS5",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "BAIC": {
+      "X35": [
+        {
+          "make": "BAIC",
+          "model": "X35",
+          "body_type": "SUV"
+        }
+      ],
+      "X55": [
+        {
+          "make": "BAIC",
+          "model": "X55",
+          "body_type": "SUV"
+        }
+      ],
+      "BJ40": [
+        {
+          "make": "BAIC",
+          "model": "BJ40",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Zeekr": {
+      "001": [
+        {
+          "make": "Zeekr",
+          "model": "001",
+          "body_type": "Wagon"
+        }
+      ],
+      "X": [
+        {
+          "make": "Zeekr",
+          "model": "X",
+          "body_type": "SUV"
+        }
+      ],
+      "009": [
+        {
+          "make": "Zeekr",
+          "model": "009",
+          "body_type": "MPV"
+        }
+      ]
+    },
+    "Li Auto": {
+      "L7": [
+        {
+          "make": "Li Auto",
+          "model": "L7",
+          "body_type": "SUV"
+        }
+      ],
+      "L8": [
+        {
+          "make": "Li Auto",
+          "model": "L8",
+          "body_type": "SUV"
+        }
+      ],
+      "L9": [
+        {
+          "make": "Li Auto",
+          "model": "L9",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "NIO": {
+      "ES6": [
+        {
+          "make": "NIO",
+          "model": "ES6",
+          "body_type": "SUV"
+        }
+      ],
+      "ES8": [
+        {
+          "make": "NIO",
+          "model": "ES8",
+          "body_type": "SUV"
+        }
+      ],
+      "ET5": [
+        {
+          "make": "NIO",
+          "model": "ET5",
+          "body_type": "Sedan"
+        }
+      ],
+      "ET7": [
+        {
+          "make": "NIO",
+          "model": "ET7",
+          "body_type": "Sedan"
+        }
+      ]
+    },
+    "XPeng": {
+      "P7": [
+        {
+          "make": "XPeng",
+          "model": "P7",
+          "body_type": "Sedan"
+        }
+      ],
+      "G6": [
+        {
+          "make": "XPeng",
+          "model": "G6",
+          "body_type": "SUV"
+        }
+      ],
+      "G9": [
+        {
+          "make": "XPeng",
+          "model": "G9",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Wuling": {
+      "Hongguang": [
+        {
+          "make": "Wuling",
+          "model": "Hongguang",
+          "body_type": "MPV"
+        }
+      ],
+      "Mini": [
+        {
+          "make": "Wuling",
+          "model": "Mini",
+          "body_type": "Hatchback"
+        }
+      ]
+    },
+    "Moskvich": {
+      "3": [
+        {
+          "make": "Moskvich",
+          "model": "3",
+          "body_type": "SUV"
+        }
+      ],
+      "6": [
+        {
+          "make": "Moskvich",
+          "model": "6",
+          "body_type": "Sedan"
         }
       ]
     }
