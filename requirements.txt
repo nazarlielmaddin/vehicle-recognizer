@@ -1,6 +1,5 @@
-# vehicle-recognizer — production dependencies
-# Python 3.10+ recommended. GPU: CUDA 12.1+ for training.
-python-version = ">=3.10"
+# vehicle-recognizer — production dependencies (Python 3.10+, pip format)
+# GPU: CUDA 12.1+ for training (install torch CUDA build separately).
 
 # --- core inference ---
 torch>=2.2
