@@ -14,6 +14,9 @@ Pillow>=10.3
 scikit-learn>=1.4
 scipy>=1.12
 
+# --- zero-shot fallback (used only until trained classifiers exist) ---
+open_clip_torch>=2.26
+
 # --- embeddings / retrieval ---
 faiss-cpu>=1.8  # optional; fallback to sklearn if unavailable
 # faiss-gpu for CUDA builds (install manually)
