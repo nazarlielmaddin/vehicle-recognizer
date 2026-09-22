@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Avtomobil Tanıma — Parking-Kamera Sistemi</title>
+<style>
+:root{--bg:#0f141b;--card:#1a2230;--acc:#35c26e;--warn:#e8a13c;--bad:#e5534b;--txt:#e8eef5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 system-ui}
+header{padding:18px 24px;border-bottom:1px solid #263043}h1{margin:0;font-size:20px}
+main{max-width:1100px;margin:0 auto;padding:20px}
+#drop{border:2px dashed #3a4a63;border-radius:12px;padding:36px;text-align:center;background:#141b27;cursor:pointer}
+#drop.over{border-color:var(--acc)}
+#preview{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.thumb{position:relative;width:150px}.thumb img{width:100%;border-radius:8px}
+.thumb button{position:absolute;top:4px;right:4px}
+.row{display:flex;gap:10px;margin:12px 0;align-items:center;flex-wrap:wrap}
+button{background:var(--acc);border:0;color:#06240f;font-weight:700;padding:10px 18px;border-radius:8px;cursor:pointer}
+button.ghost{background:#263043;color:var(--txt)}
+.card{background:var(--card);border-radius:12px;padding:16px;margin:12px 0}
+.badge{display:inline-block;padding:2px 10px;border-radius:20px;font-weight:700}
+.conf{background:#0d2b1a}.unc{background:#33270d}.unk{background:#3a1414}
+.btype{font-size:17px;background:#101826;padding:8px 12px;border-radius:8px;margin:8px 0}
+.bar{height:8px;background:#0c1119;border-radius:6px;overflow:hidden;margin:4px 0 10px}
+.bar>i{display:block;height:100%;background:var(--acc)}
+img.annot{max-width:100%;border-radius:8px;margin-top:8px}
+small{color:#9fb0c7}
+</style>
+</head>
+<body>
+<header><h1>🚗 Avtomobil Tanıma <small>parking / müşahidə kameraları üçün</small></h1></header>
+<main>
+<div id="drop">Şəkilləri bura sürükləyin və ya seçmək üçün klikləyin (maks. 8)<input id="file" type="file" accept="image/*" multiple hidden/></div>
+<div id="preview"></div>
+<div class="row">
+<button id="go">🔍 Tanı</button>
+<button id="clear" class="ghost">Təmizlə</button>
+<button id="fuse" class="ghost">Eyni avtomobil kimi birləşdir</button>
+<span id="state"></span>
+</div>
+<div id="out"></div>
+</main>
+<script>
+const drop=document.getElementById('drop'),fi=document.getElementById('file'),
+prev=document.getElementById('preview'),out=document.getElementById('out'),st=document.getElementById('state');
+const BODY={Sedan:'Sedan',Hatchback:'Hetçbek',Coupe:'Kupe',Convertible:'Kabriolet',Wagon:'Universal',
+SUV:'SUV',Crossover:'Krossover',MPV:'Miniven',Pickup:'Pikap',Van:'Furqon',PanelVan:'Panel furqon',
+LightTruck:'Yüngül yük',HeavyTruck:'TIR (ağır yük)',Bus:'Avtobus',Minibus:'Mikroavtobus',Other:'Digər',Unknown:'Naməlum'};
+const VIEW={FRONT:'Ön',REAR:'Arxa',LEFT:'Sol',RIGHT:'Sağ',FRONT_LEFT:'Ön-sol',FRONT_RIGHT:'Ön-sağ',
+REAR_LEFT:'Arxa-sol',REAR_RIGHT:'Arxa-sağ',UNKNOWN:'Naməlum'};
+const STATUS={CONFIDENT:'ƏMİN',UNCERTAIN:'QEYRİ-MÜƏYYƏN',UNKNOWN:'NAMƏLUM'};
+const SRC={'trained':'öyrədilmiş model','zero-shot-clip':'zero-shot (müvəqqəti rejim — maksimum QEYRİ-MÜƏYYƏN)','none':'yoxdur'};
+let files=[];
+drop.onclick=()=>fi.click();
+['dragover','dragenter'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.add('over')}));
+['dragleave','drop'].forEach(e=>drop.addEventListener(e,ev=>{ev.preventDefault();drop.classList.remove('over')}));
+drop.addEventListener('drop',ev=>addFiles(ev.dataTransfer.files));
+fi.onchange=()=>addFiles(fi.files);
+function addFiles(fl){files.push(...fl);render();}
+function render(){prev.innerHTML='';files.forEach((f,i)=>{const u=URL.createObjectURL(f);
+const d=document.createElement('div');d.className='thumb';d.innerHTML=`<img src="${u}"/><button data-i="${i}">✕</button>`;prev.appendChild(d);});
+prev.querySelectorAll('button').forEach(b=>b.onclick=e=>{e.stopPropagation();files.splice(+b.dataset.i,1);render();});}
+document.getElementById('clear').onclick=()=>{files=[];out.innerHTML='';render();};
+async function send(url){if(!files.length){alert('Əvvəlcə şəkil əlavə edin');return;}
+st.textContent='⏳ emal olunur…';out.innerHTML='';
+const fd=new FormData();files.forEach(f=>fd.append('files',f));
+const r=await fetch(url,{method:'POST',body:fd});const j=await r.json();
+st.textContent='';show(j.results||[j]);}
+document.getElementById('go').onclick=()=>send('/predict');
+document.getElementById('fuse').onclick=async()=>{if(files.length<2){alert('Ən azı 2 görünüş əlavə edin');return;}
+st.textContent='⏳ birləşdirilir…';const fd=new FormData();files.forEach(f=>fd.append('files',f));
+const r=await fetch('/predict-fused',{method:'POST',body:fd});const j=await r.json();st.textContent='';
+out.innerHTML=`<div class="card"><h3>Ümumi nəticə: ${j.fused_model} (${(j.fused_confidence*100).toFixed(1)}%)</h3>
+${(j.fused_alternatives||[]).map(a=>`<div>${a.label} — ${(a.confidence*100).toFixed(1)}%</div>`).join('')}
+<h4>Hər şəkil üzrə</h4>${j.per_image.map(showOne).join('')}</div>`;};
+function cls(s){return s==='CONFIDENT'?'conf':s==='UNCERTAIN'?'unc':'unk';}
+function showOne(r){if(!r.vehicles||!r.vehicles.length)return `<div class="card"><b>${r.filename}</b>: AVTOMOBİL TAPILMADI — ${r.message||''}</div>`;
+return r.vehicles.map(v=>`<div class="card"><h3>Avtomobil #${v.id} — ${v.make} ${v.model}</h3>
+<span class="badge ${cls(v.status)}">${STATUS[v.status]||v.status}</span>
+<div class="btype">🚐 Ban növü: <b>${BODY[v.body_type]||v.body_type}</b> (${(v.body_conf*100).toFixed(1)}%)</div>
+<div>Marka: <b>${v.make}</b> (${(v.make_conf*100).toFixed(1)}%) · Model: <b>${v.model}</b></div>
+<div>Rakurs: <b>${VIEW[v.orientation]||v.orientation}</b></div>
+<div>Əminlik: <b>${(v.confidence*100).toFixed(1)}%</b> · det ${(v.det_conf*100).toFixed(0)}% · NN-oxşarlıq ${v.nn_similarity}</div>
+<div><small>Mənbə: ${SRC[v.evidence_source]||v.evidence_source||'məlum deyil'}</small></div>
+<div class="bar"><i style="width:${v.confidence*100}%"></i></div>
+<b>Alternativlər</b>${v.alternatives.map(a=>`<div>${a.label} — ${(a.confidence*100).toFixed(1)}%</div>`).join('')}
+${v.abstain_reasons.length?`<small>⚠ ${v.abstain_reasons.join('; ')}</small>`:''}
+${r.annotated_jpeg_b64?`<img class="annot" src="data:image/jpeg;base64,${r.annotated_jpeg_b64}"/>`:''}
+</div>`).join('');}
+function show(rs){out.innerHTML=rs.map(showOne).join('');}
+</script>
+</body>
+</html>

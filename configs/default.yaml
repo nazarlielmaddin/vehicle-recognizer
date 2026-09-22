@@ -1,0 +1,71 @@
+# Default inference + system configuration.
+# All thresholds / paths / sizes live here — never hard-code in code.
+system:
+  seed: 42
+  device: auto          # auto | cuda | cpu
+  num_workers: 4
+  log_level: INFO
+
+paths:
+  detector_weights: "models/detector/yolo11m.pt"   # Ultralytics pretrained; see docs/SETUP_MODELS.md
+  make_weights: "models/make/best.pt"              # trained by training/train_make.py
+  model_weights: "models/model/best.pt"            # trained by training/train_finegrained.py
+  body_weights: "models/body_type/best.pt"
+  viewpoint_weights: "models/viewpoint/best.pt"
+  embedding_weights: "models/embedding/best.pt"
+  vector_index: "embeddings/vehicle_index.faiss"
+  taxonomy: "data/metadata/taxonomy.json"
+  dataset_version: "data/processed/dataset_version.json"
+
+image:
+  max_side: 1600
+  detector_imgsz: 640
+  classifier_size: [224, 224]
+  keep_aspect_ratio: true
+  pad_color: [114, 114, 114]
+
+detection:
+  conf: 0.35
+  iou: 0.5
+  max_det: 20
+  min_box_area: 2500        # px^2 — smaller boxes → LOW evidence
+  crop_context: 0.12        # 12% padding around box
+  classes: [2, 3, 5, 7]     # COCO: car, motorcycle(excluded later), bus, truck
+
+quality:
+  min_resolution: 80        # min vehicle-crop side in px
+  blur_threshold: 90.0      # Laplacian variance below → blurred
+  dark_threshold: 35.0      # mean gray below → LOW_LIGHT/NIGHT candidate
+  bright_threshold: 220.0
+
+viewpoint:
+  classes: [FRONT, REAR, LEFT, RIGHT, FRONT_LEFT, FRONT_RIGHT, REAR_LEFT, REAR_RIGHT, UNKNOWN]
+
+body_types: [Sedan, Hatchback, Coupe, Convertible, Wagon, SUV, Crossover, MPV,
+             Pickup, Van, PanelVan, LightTruck, HeavyTruck, Bus, Minibus, Other, Unknown]
+
+fusion:
+  w_classifier: 0.6
+  w_retrieval: 0.4
+  top_k: 5
+
+calibration:
+  temperature: 1.0          # fitted by scripts/calibrate_confidence.py
+  method: temperature_scaling
+
+unknown:
+  min_confidence: 0.55
+  min_margin: 0.15          # top1 - top2
+  max_entropy: 1.6
+  min_nn_similarity: 0.45   # cosine similarity to nearest reference embedding
+  max_nn_distance: 0.9
+  poor_quality_abstain: true
+  rare_class_threshold: 20  # fewer than N train samples → LIMITED-EVIDENCE flag
+
+api:
+  host: "127.0.0.1"
+  port: 8000
+  max_upload_mb: 15
+  max_images_per_request: 8
+  allowed_mime: ["image/jpeg", "image/png", "image/webp"]
+  cors_origins: ["*"]

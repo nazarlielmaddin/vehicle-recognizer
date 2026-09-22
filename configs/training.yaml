@@ -1,0 +1,27 @@
+# Training hyperparameters — override per stage via --config + --overrides.
+backbone_default: "convnext_tiny.fb_in1k"   # benchmark candidates in training/benchmark.py
+pretrained: true
+image_size: 224
+epochs_stage_vehicle_adapt: 10
+epochs_make: 25
+epochs_finegrained: 60
+epochs_body: 25
+epochs_embedding: 40
+batch_size: 64
+lr_backbone: 1.0e-4
+lr_head: 3.0e-4
+weight_decay: 0.05
+scheduler: cosine
+warmup_epochs: 3
+label_smoothing: 0.1
+focal_gamma: 2.0            # for imbalanced fine-grained stage
+oversample_rare: true
+sampler: class_balanced
+early_stopping_patience: 8
+mixed_precision: true
+grad_clip: 1.0
+hard_negative_rounds: 3
+embedding_dim: 512
+embedding_loss: arcface     # arcface | triplet | supcon
+triplet_margin: 0.3
+val_split_identity_aware: true

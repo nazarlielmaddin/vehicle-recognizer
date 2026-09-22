@@ -1,0 +1,27 @@
+# Domain augmentation — parking-camera / night robustness.
+# Applied ONLY to train split. Val/test stay clean (real images).
+train_augmentation:
+  horizontal_flip_p: 0.5
+  day_night:
+    brightness_limit: 0.35
+    contrast_limit: 0.35
+    gamma_limit: [60, 140]
+    color_temp_shift_p: 0.3
+  night_simulation_p: 0.35   # darken + ISO noise + color shift
+  iso_noise_p: 0.3
+  motion_blur_p: 0.2
+  defocus_blur_p: 0.15
+  jpeg_compression_p: 0.4
+  jpeg_quality: [30, 95]
+  glare_p: 0.15              # headlight flare / taillight glow
+  shadow_p: 0.25
+  wet_reflection_p: 0.15
+  fisheye_p: 0.1
+  perspective_p: 0.2
+  occlusion_p: 0.25          # random erase / cutout simulating partial block
+  low_res_p: 0.3             # downscale-upscale to mimic CCTV
+  cctv_compression_p: 0.3
+rules:
+  - never_apply_to_val_test: true
+  - max_two_corruptions_per_image: true
+  - keep_realism_guard: true   # skip aug if Laplacian variance collapses

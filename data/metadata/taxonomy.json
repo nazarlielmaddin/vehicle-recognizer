@@ -1,0 +1,2124 @@
+{
+  "makes": [
+    "Audi",
+    "BMW",
+    "Chery",
+    "Chevrolet",
+    "Citroen",
+    "Dacia",
+    "Daewoo",
+    "Fiat",
+    "Ford",
+    "GAZ",
+    "Geely",
+    "Haval",
+    "Honda",
+    "Hyundai",
+    "Infiniti",
+    "Iran Khodro",
+    "Jeep",
+    "Kia",
+    "Lada",
+    "Land Rover",
+    "Lexus",
+    "Lifan",
+    "Mazda",
+    "Mercedes-Benz",
+    "Mitsubishi",
+    "Nissan",
+    "Opel",
+    "Peugeot",
+    "Porsche",
+    "Ravon",
+    "Renault",
+    "Saipa",
+    "Skoda",
+    "Subaru",
+    "Suzuki",
+    "Tesla",
+    "Toyota",
+    "UAZ",
+    "Volkswagen",
+    "Volvo",
+    "ZAZ"
+  ],
+  "models": [
+    "Audi A3",
+    "Audi A4",
+    "Audi A5",
+    "Audi A6",
+    "Audi A7",
+    "Audi A8",
+    "Audi Q3",
+    "Audi Q5",
+    "Audi Q7",
+    "Audi Q8",
+    "BMW 1 Series",
+    "BMW 2 Series",
+    "BMW 3 Series",
+    "BMW 4 Series",
+    "BMW 5 Series",
+    "BMW 6 Series",
+    "BMW 7 Series",
+    "BMW X1",
+    "BMW X3",
+    "BMW X4",
+    "BMW X5",
+    "BMW X6",
+    "BMW X7",
+    "Chery Arrizo 5",
+    "Chery Bonus",
+    "Chery Tiggo 4",
+    "Chery Tiggo 7",
+    "Chery Tiggo 8",
+    "Chevrolet Aveo",
+    "Chevrolet Captiva",
+    "Chevrolet Cobalt",
+    "Chevrolet Cruze",
+    "Chevrolet Equinox",
+    "Chevrolet Lacetti",
+    "Chevrolet Malibu",
+    "Chevrolet Nexia",
+    "Chevrolet Spark",
+    "Chevrolet Tahoe",
+    "Citroen Berlingo",
+    "Citroen C-Elysee",
+    "Citroen C3",
+    "Citroen C4",
+    "Dacia Duster",
+    "Dacia Logan",
+    "Dacia Sandero",
+    "Daewoo Gentra",
+    "Daewoo Matiz",
+    "Daewoo Nexia",
+    "Fiat 500",
+    "Fiat Doblo",
+    "Fiat Egea",
+    "Ford Explorer",
+    "Ford Fiesta",
+    "Ford Focus",
+    "Ford Fusion",
+    "Ford Kuga",
+    "Ford Mondeo",
+    "Ford Mustang",
+    "Ford Ranger",
+    "Ford Transit",
+    "GAZ Gazelle",
+    "GAZ Sobol",
+    "GAZ Volga",
+    "Geely Atlas",
+    "Geely Coolray",
+    "Geely Emgrand",
+    "Haval F7",
+    "Haval H6",
+    "Haval Jolion",
+    "Honda Accord",
+    "Honda CR-V",
+    "Honda Civic",
+    "Honda HR-V",
+    "Honda Pilot",
+    "Hyundai Accent",
+    "Hyundai Creta",
+    "Hyundai Elantra",
+    "Hyundai Santa Fe",
+    "Hyundai Solaris",
+    "Hyundai Sonata",
+    "Hyundai Tucson",
+    "Hyundai i30",
+    "Infiniti FX",
+    "Infiniti Q50",
+    "Infiniti QX50",
+    "Infiniti QX60",
+    "Infiniti QX80",
+    "Iran Khodro Dena",
+    "Iran Khodro Peugeot 405",
+    "Iran Khodro Runna",
+    "Iran Khodro Samand",
+    "Jeep Cherokee",
+    "Jeep Compass",
+    "Jeep Grand Cherokee",
+    "Jeep Wrangler",
+    "Kia Carnival",
+    "Kia Ceed",
+    "Kia Cerato",
+    "Kia K5",
+    "Kia Rio",
+    "Kia Seltos",
+    "Kia Sorento",
+    "Kia Soul",
+    "Kia Sportage",
+    "Lada 2107",
+    "Lada 2110",
+    "Lada 2114",
+    "Lada Granta",
+    "Lada Kalina",
+    "Lada Largus",
+    "Lada Niva",
+    "Lada Priora",
+    "Lada Vesta",
+    "Lada XRAY",
+    "Land Rover Defender",
+    "Land Rover Discovery",
+    "Land Rover Freelander",
+    "Land Rover Range Rover",
+    "Land Rover Range Rover Evoque",
+    "Land Rover Range Rover Sport",
+    "Lexus ES",
+    "Lexus GX",
+    "Lexus IS",
+    "Lexus LS",
+    "Lexus LX",
+    "Lexus NX",
+    "Lexus RX",
+    "Lifan Solano",
+    "Lifan X50",
+    "Lifan X60",
+    "Mazda CX-30",
+    "Mazda CX-5",
+    "Mazda CX-9",
+    "Mazda Mazda3",
+    "Mazda Mazda6",
+    "Mercedes-Benz A-Class",
+    "Mercedes-Benz C-Class",
+    "Mercedes-Benz CLA",
+    "Mercedes-Benz E-Class",
+    "Mercedes-Benz G-Class",
+    "Mercedes-Benz GLA",
+    "Mercedes-Benz GLC",
+    "Mercedes-Benz GLE",
+    "Mercedes-Benz GLS",
+    "Mercedes-Benz S-Class",
+    "Mercedes-Benz Sprinter",
+    "Mercedes-Benz Vito",
+    "Mitsubishi ASX",
+    "Mitsubishi L200",
+    "Mitsubishi Lancer",
+    "Mitsubishi Outlander",
+    "Mitsubishi Pajero",
+    "Mitsubishi Pajero Sport",
+    "Nissan Almera",
+    "Nissan Juke",
+    "Nissan Leaf",
+    "Nissan Micra",
+    "Nissan Murano",
+    "Nissan Navara",
+    "Nissan Patrol",
+    "Nissan Qashqai",
+    "Nissan Teana",
+    "Nissan Tiida",
+    "Nissan X-Trail",
+    "Opel Astra",
+    "Opel Corsa",
+    "Opel Insignia",
+    "Opel Mokka",
+    "Opel Vectra",
+    "Opel Zafira",
+    "Peugeot 2008",
+    "Peugeot 206",
+    "Peugeot 3008",
+    "Peugeot 301",
+    "Peugeot 308",
+    "Peugeot 408",
+    "Peugeot 5008",
+    "Peugeot 508",
+    "Peugeot Boxer",
+    "Peugeot Partner",
+    "Porsche 911",
+    "Porsche Cayenne",
+    "Porsche Macan",
+    "Porsche Panamera",
+    "Ravon Gentra",
+    "Ravon Nexia R3",
+    "Ravon R4",
+    "Renault Arkana",
+    "Renault Duster",
+    "Renault Fluence",
+    "Renault Kaptur",
+    "Renault Logan",
+    "Renault Megane",
+    "Renault Sandero",
+    "Saipa Pride",
+    "Saipa Quick",
+    "Saipa Tiba",
+    "Skoda Fabia",
+    "Skoda Karoq",
+    "Skoda Kodiaq",
+    "Skoda Octavia",
+    "Skoda Rapid",
+    "Skoda Superb",
+    "Subaru Forester",
+    "Subaru Impreza",
+    "Subaru Outback",
+    "Subaru XV",
+    "Suzuki Jimny",
+    "Suzuki SX4",
+    "Suzuki Swift",
+    "Suzuki Vitara",
+    "Tesla Model 3",
+    "Tesla Model S",
+    "Tesla Model X",
+    "Tesla Model Y",
+    "Toyota Avalon",
+    "Toyota C-HR",
+    "Toyota Camry",
+    "Toyota Corolla",
+    "Toyota Fortuner",
+    "Toyota Highlander",
+    "Toyota Hilux",
+    "Toyota Land Cruiser",
+    "Toyota Prado",
+    "Toyota RAV4",
+    "Toyota Yaris",
+    "UAZ Bukhanka",
+    "UAZ Hunter",
+    "UAZ Patriot",
+    "Volkswagen Amarok",
+    "Volkswagen Arteon",
+    "Volkswagen Caddy",
+    "Volkswagen Golf",
+    "Volkswagen Jetta",
+    "Volkswagen Passat",
+    "Volkswagen Polo",
+    "Volkswagen T-Roc",
+    "Volkswagen Teramont",
+    "Volkswagen Tiguan",
+    "Volkswagen Touareg",
+    "Volkswagen Transporter",
+    "Volvo S60",
+    "Volvo S90",
+    "Volvo XC40",
+    "Volvo XC60",
+    "Volvo XC90",
+    "ZAZ Chance",
+    "ZAZ Slavuta",
+    "ZAZ Tavria"
+  ],
+  "detail": {
+    "Toyota": {
+      "Camry": [
+        {
+          "make": "Toyota",
+          "model": "Camry",
+          "body_type": "Sedan"
+        }
+      ],
+      "Corolla": [
+        {
+          "make": "Toyota",
+          "model": "Corolla",
+          "body_type": "Sedan"
+        }
+      ],
+      "RAV4": [
+        {
+          "make": "Toyota",
+          "model": "RAV4",
+          "body_type": "SUV"
+        }
+      ],
+      "Land Cruiser": [
+        {
+          "make": "Toyota",
+          "model": "Land Cruiser",
+          "body_type": "SUV"
+        }
+      ],
+      "Hilux": [
+        {
+          "make": "Toyota",
+          "model": "Hilux",
+          "body_type": "Pickup"
+        }
+      ],
+      "Yaris": [
+        {
+          "make": "Toyota",
+          "model": "Yaris",
+          "body_type": "Hatchback"
+        }
+      ],
+      "C-HR": [
+        {
+          "make": "Toyota",
+          "model": "C-HR",
+          "body_type": "SUV"
+        }
+      ],
+      "Highlander": [
+        {
+          "make": "Toyota",
+          "model": "Highlander",
+          "body_type": "SUV"
+        }
+      ],
+      "Prado": [
+        {
+          "make": "Toyota",
+          "model": "Prado",
+          "body_type": "SUV"
+        }
+      ],
+      "Fortuner": [
+        {
+          "make": "Toyota",
+          "model": "Fortuner",
+          "body_type": "SUV"
+        }
+      ],
+      "Avalon": [
+        {
+          "make": "Toyota",
+          "model": "Avalon",
+          "body_type": "Sedan"
+        }
+      ]
+    },
+    "BMW": {
+      "3 Series": [
+        {
+          "make": "BMW",
+          "model": "3 Series",
+          "body_type": "Sedan"
+        }
+      ],
+      "5 Series": [
+        {
+          "make": "BMW",
+          "model": "5 Series",
+          "body_type": "Sedan"
+        }
+      ],
+      "X3": [
+        {
+          "make": "BMW",
+          "model": "X3",
+          "body_type": "SUV"
+        }
+      ],
+      "X5": [
+        {
+          "make": "BMW",
+          "model": "X5",
+          "body_type": "SUV"
+        }
+      ],
+      "1 Series": [
+        {
+          "make": "BMW",
+          "model": "1 Series",
+          "body_type": "Hatchback"
+        }
+      ],
+      "2 Series": [
+        {
+          "make": "BMW",
+          "model": "2 Series",
+          "body_type": "Coupe"
+        }
+      ],
+      "4 Series": [
+        {
+          "make": "BMW",
+          "model": "4 Series",
+          "body_type": "Coupe"
+        }
+      ],
+      "6 Series": [
+        {
+          "make": "BMW",
+          "model": "6 Series",
+          "body_type": "Coupe"
+        }
+      ],
+      "7 Series": [
+        {
+          "make": "BMW",
+          "model": "7 Series",
+          "body_type": "Sedan"
+        }
+      ],
+      "X1": [
+        {
+          "make": "BMW",
+          "model": "X1",
+          "body_type": "SUV"
+        }
+      ],
+      "X4": [
+        {
+          "make": "BMW",
+          "model": "X4",
+          "body_type": "SUV"
+        }
+      ],
+      "X6": [
+        {
+          "make": "BMW",
+          "model": "X6",
+          "body_type": "SUV"
+        }
+      ],
+      "X7": [
+        {
+          "make": "BMW",
+          "model": "X7",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Mercedes-Benz": {
+      "C-Class": [
+        {
+          "make": "Mercedes-Benz",
+          "model": "C-Class",
+          "body_type": "Sedan"
+        }
+      ],
+      "E-Class": [
+        {
+          "make": "Mercedes-Benz",
+          "model": "E-Class",
+          "body_type": "Sedan"
+        }
+      ],
+      "S-Class": [
+        {
+          "make": "Mercedes-Benz",
+          "model": "S-Class",
+          "body_type": "Sedan"
+        }
+      ],
+      "GLC": [
+        {
+          "make": "Mercedes-Benz",
+          "model": "GLC",
+          "body_type": "SUV"
+        }
+      ],
+      "Sprinter": [
+        {
+          "make": "Mercedes-Benz",
+          "model": "Sprinter",
+          "body_type": "Van"
+        }
+      ],
+      "A-Class": [
+        {
+          "make": "Mercedes-Benz",
+          "model": "A-Class",
+          "body_type": "Hatchback"
+        }
+      ],
+      "GLA": [
+        {
+          "make": "Mercedes-Benz",
+          "model": "GLA",
+          "body_type": "SUV"
+        }
+      ],
+      "GLE": [
+        {
+          "make": "Mercedes-Benz",
+          "model": "GLE",
+          "body_type": "SUV"
+        }
+      ],
+      "GLS": [
+        {
+          "make": "Mercedes-Benz",
+          "model": "GLS",
+          "body_type": "SUV"
+        }
+      ],
+      "G-Class": [
+        {
+          "make": "Mercedes-Benz",
+          "model": "G-Class",
+          "body_type": "SUV"
+        }
+      ],
+      "CLA": [
+        {
+          "make": "Mercedes-Benz",
+          "model": "CLA",
+          "body_type": "Sedan"
+        }
+      ],
+      "Vito": [
+        {
+          "make": "Mercedes-Benz",
+          "model": "Vito",
+          "body_type": "Van"
+        }
+      ]
+    },
+    "Lada": {
+      "Granta": [
+        {
+          "make": "Lada",
+          "model": "Granta",
+          "body_type": "Sedan"
+        }
+      ],
+      "Vesta": [
+        {
+          "make": "Lada",
+          "model": "Vesta",
+          "body_type": "Sedan"
+        }
+      ],
+      "Niva": [
+        {
+          "make": "Lada",
+          "model": "Niva",
+          "body_type": "SUV"
+        }
+      ],
+      "Priora": [
+        {
+          "make": "Lada",
+          "model": "Priora",
+          "body_type": "Sedan"
+        }
+      ],
+      "Kalina": [
+        {
+          "make": "Lada",
+          "model": "Kalina",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Largus": [
+        {
+          "make": "Lada",
+          "model": "Largus",
+          "body_type": "Wagon"
+        }
+      ],
+      "XRAY": [
+        {
+          "make": "Lada",
+          "model": "XRAY",
+          "body_type": "Crossover"
+        }
+      ],
+      "2114": [
+        {
+          "make": "Lada",
+          "model": "2114",
+          "body_type": "Hatchback"
+        }
+      ],
+      "2110": [
+        {
+          "make": "Lada",
+          "model": "2110",
+          "body_type": "Sedan"
+        }
+      ],
+      "2107": [
+        {
+          "make": "Lada",
+          "model": "2107",
+          "body_type": "Sedan"
+        }
+      ]
+    },
+    "GAZ": {
+      "Volga": [
+        {
+          "make": "GAZ",
+          "model": "Volga",
+          "body_type": "Sedan"
+        }
+      ],
+      "Gazelle": [
+        {
+          "make": "GAZ",
+          "model": "Gazelle",
+          "body_type": "Van"
+        }
+      ],
+      "Sobol": [
+        {
+          "make": "GAZ",
+          "model": "Sobol",
+          "body_type": "Van"
+        }
+      ]
+    },
+    "UAZ": {
+      "Patriot": [
+        {
+          "make": "UAZ",
+          "model": "Patriot",
+          "body_type": "SUV"
+        }
+      ],
+      "Hunter": [
+        {
+          "make": "UAZ",
+          "model": "Hunter",
+          "body_type": "SUV"
+        }
+      ],
+      "Bukhanka": [
+        {
+          "make": "UAZ",
+          "model": "Bukhanka",
+          "body_type": "Van"
+        }
+      ]
+    },
+    "Volkswagen": {
+      "Polo": [
+        {
+          "make": "Volkswagen",
+          "model": "Polo",
+          "body_type": "Sedan"
+        }
+      ],
+      "Golf": [
+        {
+          "make": "Volkswagen",
+          "model": "Golf",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Jetta": [
+        {
+          "make": "Volkswagen",
+          "model": "Jetta",
+          "body_type": "Sedan"
+        }
+      ],
+      "Passat": [
+        {
+          "make": "Volkswagen",
+          "model": "Passat",
+          "body_type": "Sedan"
+        }
+      ],
+      "Tiguan": [
+        {
+          "make": "Volkswagen",
+          "model": "Tiguan",
+          "body_type": "SUV"
+        }
+      ],
+      "Touareg": [
+        {
+          "make": "Volkswagen",
+          "model": "Touareg",
+          "body_type": "SUV"
+        }
+      ],
+      "T-Roc": [
+        {
+          "make": "Volkswagen",
+          "model": "T-Roc",
+          "body_type": "SUV"
+        }
+      ],
+      "Arteon": [
+        {
+          "make": "Volkswagen",
+          "model": "Arteon",
+          "body_type": "Sedan"
+        }
+      ],
+      "Teramont": [
+        {
+          "make": "Volkswagen",
+          "model": "Teramont",
+          "body_type": "SUV"
+        }
+      ],
+      "Caddy": [
+        {
+          "make": "Volkswagen",
+          "model": "Caddy",
+          "body_type": "Van"
+        }
+      ],
+      "Transporter": [
+        {
+          "make": "Volkswagen",
+          "model": "Transporter",
+          "body_type": "Van"
+        }
+      ],
+      "Amarok": [
+        {
+          "make": "Volkswagen",
+          "model": "Amarok",
+          "body_type": "Pickup"
+        }
+      ]
+    },
+    "Audi": {
+      "A3": [
+        {
+          "make": "Audi",
+          "model": "A3",
+          "body_type": "Sedan"
+        }
+      ],
+      "A4": [
+        {
+          "make": "Audi",
+          "model": "A4",
+          "body_type": "Sedan"
+        }
+      ],
+      "A5": [
+        {
+          "make": "Audi",
+          "model": "A5",
+          "body_type": "Coupe"
+        }
+      ],
+      "A6": [
+        {
+          "make": "Audi",
+          "model": "A6",
+          "body_type": "Sedan"
+        }
+      ],
+      "A7": [
+        {
+          "make": "Audi",
+          "model": "A7",
+          "body_type": "Sedan"
+        }
+      ],
+      "A8": [
+        {
+          "make": "Audi",
+          "model": "A8",
+          "body_type": "Sedan"
+        }
+      ],
+      "Q3": [
+        {
+          "make": "Audi",
+          "model": "Q3",
+          "body_type": "SUV"
+        }
+      ],
+      "Q5": [
+        {
+          "make": "Audi",
+          "model": "Q5",
+          "body_type": "SUV"
+        }
+      ],
+      "Q7": [
+        {
+          "make": "Audi",
+          "model": "Q7",
+          "body_type": "SUV"
+        }
+      ],
+      "Q8": [
+        {
+          "make": "Audi",
+          "model": "Q8",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Skoda": {
+      "Octavia": [
+        {
+          "make": "Skoda",
+          "model": "Octavia",
+          "body_type": "Sedan"
+        }
+      ],
+      "Superb": [
+        {
+          "make": "Skoda",
+          "model": "Superb",
+          "body_type": "Sedan"
+        }
+      ],
+      "Fabia": [
+        {
+          "make": "Skoda",
+          "model": "Fabia",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Rapid": [
+        {
+          "make": "Skoda",
+          "model": "Rapid",
+          "body_type": "Sedan"
+        }
+      ],
+      "Kodiaq": [
+        {
+          "make": "Skoda",
+          "model": "Kodiaq",
+          "body_type": "SUV"
+        }
+      ],
+      "Karoq": [
+        {
+          "make": "Skoda",
+          "model": "Karoq",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Opel": {
+      "Astra": [
+        {
+          "make": "Opel",
+          "model": "Astra",
+          "body_type": "Sedan"
+        }
+      ],
+      "Corsa": [
+        {
+          "make": "Opel",
+          "model": "Corsa",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Insignia": [
+        {
+          "make": "Opel",
+          "model": "Insignia",
+          "body_type": "Sedan"
+        }
+      ],
+      "Mokka": [
+        {
+          "make": "Opel",
+          "model": "Mokka",
+          "body_type": "SUV"
+        }
+      ],
+      "Vectra": [
+        {
+          "make": "Opel",
+          "model": "Vectra",
+          "body_type": "Sedan"
+        }
+      ],
+      "Zafira": [
+        {
+          "make": "Opel",
+          "model": "Zafira",
+          "body_type": "MPV"
+        }
+      ]
+    },
+    "Hyundai": {
+      "Accent": [
+        {
+          "make": "Hyundai",
+          "model": "Accent",
+          "body_type": "Sedan"
+        }
+      ],
+      "Elantra": [
+        {
+          "make": "Hyundai",
+          "model": "Elantra",
+          "body_type": "Sedan"
+        }
+      ],
+      "Sonata": [
+        {
+          "make": "Hyundai",
+          "model": "Sonata",
+          "body_type": "Sedan"
+        }
+      ],
+      "Tucson": [
+        {
+          "make": "Hyundai",
+          "model": "Tucson",
+          "body_type": "SUV"
+        }
+      ],
+      "Santa Fe": [
+        {
+          "make": "Hyundai",
+          "model": "Santa Fe",
+          "body_type": "SUV"
+        }
+      ],
+      "Creta": [
+        {
+          "make": "Hyundai",
+          "model": "Creta",
+          "body_type": "SUV"
+        }
+      ],
+      "i30": [
+        {
+          "make": "Hyundai",
+          "model": "i30",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Solaris": [
+        {
+          "make": "Hyundai",
+          "model": "Solaris",
+          "body_type": "Sedan"
+        }
+      ]
+    },
+    "Kia": {
+      "Rio": [
+        {
+          "make": "Kia",
+          "model": "Rio",
+          "body_type": "Sedan"
+        }
+      ],
+      "Cerato": [
+        {
+          "make": "Kia",
+          "model": "Cerato",
+          "body_type": "Sedan"
+        }
+      ],
+      "K5": [
+        {
+          "make": "Kia",
+          "model": "K5",
+          "body_type": "Sedan"
+        }
+      ],
+      "Sportage": [
+        {
+          "make": "Kia",
+          "model": "Sportage",
+          "body_type": "SUV"
+        }
+      ],
+      "Sorento": [
+        {
+          "make": "Kia",
+          "model": "Sorento",
+          "body_type": "SUV"
+        }
+      ],
+      "Soul": [
+        {
+          "make": "Kia",
+          "model": "Soul",
+          "body_type": "Crossover"
+        }
+      ],
+      "Ceed": [
+        {
+          "make": "Kia",
+          "model": "Ceed",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Seltos": [
+        {
+          "make": "Kia",
+          "model": "Seltos",
+          "body_type": "SUV"
+        }
+      ],
+      "Carnival": [
+        {
+          "make": "Kia",
+          "model": "Carnival",
+          "body_type": "MPV"
+        }
+      ]
+    },
+    "Lexus": {
+      "ES": [
+        {
+          "make": "Lexus",
+          "model": "ES",
+          "body_type": "Sedan"
+        }
+      ],
+      "IS": [
+        {
+          "make": "Lexus",
+          "model": "IS",
+          "body_type": "Sedan"
+        }
+      ],
+      "LS": [
+        {
+          "make": "Lexus",
+          "model": "LS",
+          "body_type": "Sedan"
+        }
+      ],
+      "LX": [
+        {
+          "make": "Lexus",
+          "model": "LX",
+          "body_type": "SUV"
+        }
+      ],
+      "NX": [
+        {
+          "make": "Lexus",
+          "model": "NX",
+          "body_type": "SUV"
+        }
+      ],
+      "RX": [
+        {
+          "make": "Lexus",
+          "model": "RX",
+          "body_type": "SUV"
+        }
+      ],
+      "GX": [
+        {
+          "make": "Lexus",
+          "model": "GX",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Nissan": {
+      "Almera": [
+        {
+          "make": "Nissan",
+          "model": "Almera",
+          "body_type": "Sedan"
+        }
+      ],
+      "Qashqai": [
+        {
+          "make": "Nissan",
+          "model": "Qashqai",
+          "body_type": "SUV"
+        }
+      ],
+      "X-Trail": [
+        {
+          "make": "Nissan",
+          "model": "X-Trail",
+          "body_type": "SUV"
+        }
+      ],
+      "Juke": [
+        {
+          "make": "Nissan",
+          "model": "Juke",
+          "body_type": "SUV"
+        }
+      ],
+      "Murano": [
+        {
+          "make": "Nissan",
+          "model": "Murano",
+          "body_type": "SUV"
+        }
+      ],
+      "Patrol": [
+        {
+          "make": "Nissan",
+          "model": "Patrol",
+          "body_type": "SUV"
+        }
+      ],
+      "Teana": [
+        {
+          "make": "Nissan",
+          "model": "Teana",
+          "body_type": "Sedan"
+        }
+      ],
+      "Tiida": [
+        {
+          "make": "Nissan",
+          "model": "Tiida",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Navara": [
+        {
+          "make": "Nissan",
+          "model": "Navara",
+          "body_type": "Pickup"
+        }
+      ],
+      "Leaf": [
+        {
+          "make": "Nissan",
+          "model": "Leaf",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Micra": [
+        {
+          "make": "Nissan",
+          "model": "Micra",
+          "body_type": "Hatchback"
+        }
+      ]
+    },
+    "Mazda": {
+      "Mazda3": [
+        {
+          "make": "Mazda",
+          "model": "Mazda3",
+          "body_type": "Sedan"
+        }
+      ],
+      "Mazda6": [
+        {
+          "make": "Mazda",
+          "model": "Mazda6",
+          "body_type": "Sedan"
+        }
+      ],
+      "CX-5": [
+        {
+          "make": "Mazda",
+          "model": "CX-5",
+          "body_type": "SUV"
+        }
+      ],
+      "CX-9": [
+        {
+          "make": "Mazda",
+          "model": "CX-9",
+          "body_type": "SUV"
+        }
+      ],
+      "CX-30": [
+        {
+          "make": "Mazda",
+          "model": "CX-30",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Honda": {
+      "Civic": [
+        {
+          "make": "Honda",
+          "model": "Civic",
+          "body_type": "Sedan"
+        }
+      ],
+      "Accord": [
+        {
+          "make": "Honda",
+          "model": "Accord",
+          "body_type": "Sedan"
+        }
+      ],
+      "CR-V": [
+        {
+          "make": "Honda",
+          "model": "CR-V",
+          "body_type": "SUV"
+        }
+      ],
+      "HR-V": [
+        {
+          "make": "Honda",
+          "model": "HR-V",
+          "body_type": "SUV"
+        }
+      ],
+      "Pilot": [
+        {
+          "make": "Honda",
+          "model": "Pilot",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Mitsubishi": {
+      "Lancer": [
+        {
+          "make": "Mitsubishi",
+          "model": "Lancer",
+          "body_type": "Sedan"
+        }
+      ],
+      "Outlander": [
+        {
+          "make": "Mitsubishi",
+          "model": "Outlander",
+          "body_type": "SUV"
+        }
+      ],
+      "Pajero": [
+        {
+          "make": "Mitsubishi",
+          "model": "Pajero",
+          "body_type": "SUV"
+        }
+      ],
+      "ASX": [
+        {
+          "make": "Mitsubishi",
+          "model": "ASX",
+          "body_type": "SUV"
+        }
+      ],
+      "Pajero Sport": [
+        {
+          "make": "Mitsubishi",
+          "model": "Pajero Sport",
+          "body_type": "SUV"
+        }
+      ],
+      "L200": [
+        {
+          "make": "Mitsubishi",
+          "model": "L200",
+          "body_type": "Pickup"
+        }
+      ]
+    },
+    "Subaru": {
+      "Forester": [
+        {
+          "make": "Subaru",
+          "model": "Forester",
+          "body_type": "SUV"
+        }
+      ],
+      "Outback": [
+        {
+          "make": "Subaru",
+          "model": "Outback",
+          "body_type": "Wagon"
+        }
+      ],
+      "Impreza": [
+        {
+          "make": "Subaru",
+          "model": "Impreza",
+          "body_type": "Sedan"
+        }
+      ],
+      "XV": [
+        {
+          "make": "Subaru",
+          "model": "XV",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Suzuki": {
+      "Swift": [
+        {
+          "make": "Suzuki",
+          "model": "Swift",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Vitara": [
+        {
+          "make": "Suzuki",
+          "model": "Vitara",
+          "body_type": "SUV"
+        }
+      ],
+      "Jimny": [
+        {
+          "make": "Suzuki",
+          "model": "Jimny",
+          "body_type": "SUV"
+        }
+      ],
+      "SX4": [
+        {
+          "make": "Suzuki",
+          "model": "SX4",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Ford": {
+      "Focus": [
+        {
+          "make": "Ford",
+          "model": "Focus",
+          "body_type": "Sedan"
+        }
+      ],
+      "Fiesta": [
+        {
+          "make": "Ford",
+          "model": "Fiesta",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Mondeo": [
+        {
+          "make": "Ford",
+          "model": "Mondeo",
+          "body_type": "Sedan"
+        }
+      ],
+      "Kuga": [
+        {
+          "make": "Ford",
+          "model": "Kuga",
+          "body_type": "SUV"
+        }
+      ],
+      "Explorer": [
+        {
+          "make": "Ford",
+          "model": "Explorer",
+          "body_type": "SUV"
+        }
+      ],
+      "Transit": [
+        {
+          "make": "Ford",
+          "model": "Transit",
+          "body_type": "Van"
+        }
+      ],
+      "Ranger": [
+        {
+          "make": "Ford",
+          "model": "Ranger",
+          "body_type": "Pickup"
+        }
+      ],
+      "Mustang": [
+        {
+          "make": "Ford",
+          "model": "Mustang",
+          "body_type": "Coupe"
+        }
+      ],
+      "Fusion": [
+        {
+          "make": "Ford",
+          "model": "Fusion",
+          "body_type": "Sedan"
+        }
+      ]
+    },
+    "Chevrolet": {
+      "Cruze": [
+        {
+          "make": "Chevrolet",
+          "model": "Cruze",
+          "body_type": "Sedan"
+        }
+      ],
+      "Lacetti": [
+        {
+          "make": "Chevrolet",
+          "model": "Lacetti",
+          "body_type": "Sedan"
+        }
+      ],
+      "Cobalt": [
+        {
+          "make": "Chevrolet",
+          "model": "Cobalt",
+          "body_type": "Sedan"
+        }
+      ],
+      "Nexia": [
+        {
+          "make": "Chevrolet",
+          "model": "Nexia",
+          "body_type": "Sedan"
+        }
+      ],
+      "Spark": [
+        {
+          "make": "Chevrolet",
+          "model": "Spark",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Malibu": [
+        {
+          "make": "Chevrolet",
+          "model": "Malibu",
+          "body_type": "Sedan"
+        }
+      ],
+      "Captiva": [
+        {
+          "make": "Chevrolet",
+          "model": "Captiva",
+          "body_type": "SUV"
+        }
+      ],
+      "Tahoe": [
+        {
+          "make": "Chevrolet",
+          "model": "Tahoe",
+          "body_type": "SUV"
+        }
+      ],
+      "Aveo": [
+        {
+          "make": "Chevrolet",
+          "model": "Aveo",
+          "body_type": "Sedan"
+        }
+      ],
+      "Equinox": [
+        {
+          "make": "Chevrolet",
+          "model": "Equinox",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Ravon": {
+      "Nexia R3": [
+        {
+          "make": "Ravon",
+          "model": "Nexia R3",
+          "body_type": "Sedan"
+        }
+      ],
+      "R4": [
+        {
+          "make": "Ravon",
+          "model": "R4",
+          "body_type": "Sedan"
+        }
+      ],
+      "Gentra": [
+        {
+          "make": "Ravon",
+          "model": "Gentra",
+          "body_type": "Sedan"
+        }
+      ]
+    },
+    "Daewoo": {
+      "Nexia": [
+        {
+          "make": "Daewoo",
+          "model": "Nexia",
+          "body_type": "Sedan"
+        }
+      ],
+      "Matiz": [
+        {
+          "make": "Daewoo",
+          "model": "Matiz",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Gentra": [
+        {
+          "make": "Daewoo",
+          "model": "Gentra",
+          "body_type": "Sedan"
+        }
+      ]
+    },
+    "Renault": {
+      "Logan": [
+        {
+          "make": "Renault",
+          "model": "Logan",
+          "body_type": "Sedan"
+        }
+      ],
+      "Duster": [
+        {
+          "make": "Renault",
+          "model": "Duster",
+          "body_type": "SUV"
+        }
+      ],
+      "Sandero": [
+        {
+          "make": "Renault",
+          "model": "Sandero",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Megane": [
+        {
+          "make": "Renault",
+          "model": "Megane",
+          "body_type": "Sedan"
+        }
+      ],
+      "Fluence": [
+        {
+          "make": "Renault",
+          "model": "Fluence",
+          "body_type": "Sedan"
+        }
+      ],
+      "Kaptur": [
+        {
+          "make": "Renault",
+          "model": "Kaptur",
+          "body_type": "SUV"
+        }
+      ],
+      "Arkana": [
+        {
+          "make": "Renault",
+          "model": "Arkana",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Peugeot": {
+      "206": [
+        {
+          "make": "Peugeot",
+          "model": "206",
+          "body_type": "Hatchback"
+        }
+      ],
+      "301": [
+        {
+          "make": "Peugeot",
+          "model": "301",
+          "body_type": "Sedan"
+        }
+      ],
+      "308": [
+        {
+          "make": "Peugeot",
+          "model": "308",
+          "body_type": "Hatchback"
+        }
+      ],
+      "408": [
+        {
+          "make": "Peugeot",
+          "model": "408",
+          "body_type": "Sedan"
+        }
+      ],
+      "508": [
+        {
+          "make": "Peugeot",
+          "model": "508",
+          "body_type": "Sedan"
+        }
+      ],
+      "2008": [
+        {
+          "make": "Peugeot",
+          "model": "2008",
+          "body_type": "SUV"
+        }
+      ],
+      "3008": [
+        {
+          "make": "Peugeot",
+          "model": "3008",
+          "body_type": "SUV"
+        }
+      ],
+      "5008": [
+        {
+          "make": "Peugeot",
+          "model": "5008",
+          "body_type": "SUV"
+        }
+      ],
+      "Partner": [
+        {
+          "make": "Peugeot",
+          "model": "Partner",
+          "body_type": "Van"
+        }
+      ],
+      "Boxer": [
+        {
+          "make": "Peugeot",
+          "model": "Boxer",
+          "body_type": "Van"
+        }
+      ]
+    },
+    "Citroen": {
+      "C3": [
+        {
+          "make": "Citroen",
+          "model": "C3",
+          "body_type": "Hatchback"
+        }
+      ],
+      "C4": [
+        {
+          "make": "Citroen",
+          "model": "C4",
+          "body_type": "Sedan"
+        }
+      ],
+      "C-Elysee": [
+        {
+          "make": "Citroen",
+          "model": "C-Elysee",
+          "body_type": "Sedan"
+        }
+      ],
+      "Berlingo": [
+        {
+          "make": "Citroen",
+          "model": "Berlingo",
+          "body_type": "Van"
+        }
+      ]
+    },
+    "Fiat": {
+      "Doblo": [
+        {
+          "make": "Fiat",
+          "model": "Doblo",
+          "body_type": "Van"
+        }
+      ],
+      "Egea": [
+        {
+          "make": "Fiat",
+          "model": "Egea",
+          "body_type": "Sedan"
+        }
+      ],
+      "500": [
+        {
+          "make": "Fiat",
+          "model": "500",
+          "body_type": "Hatchback"
+        }
+      ]
+    },
+    "Dacia": {
+      "Logan": [
+        {
+          "make": "Dacia",
+          "model": "Logan",
+          "body_type": "Sedan"
+        }
+      ],
+      "Duster": [
+        {
+          "make": "Dacia",
+          "model": "Duster",
+          "body_type": "SUV"
+        }
+      ],
+      "Sandero": [
+        {
+          "make": "Dacia",
+          "model": "Sandero",
+          "body_type": "Hatchback"
+        }
+      ]
+    },
+    "Chery": {
+      "Tiggo 4": [
+        {
+          "make": "Chery",
+          "model": "Tiggo 4",
+          "body_type": "SUV"
+        }
+      ],
+      "Tiggo 7": [
+        {
+          "make": "Chery",
+          "model": "Tiggo 7",
+          "body_type": "SUV"
+        }
+      ],
+      "Tiggo 8": [
+        {
+          "make": "Chery",
+          "model": "Tiggo 8",
+          "body_type": "SUV"
+        }
+      ],
+      "Arrizo 5": [
+        {
+          "make": "Chery",
+          "model": "Arrizo 5",
+          "body_type": "Sedan"
+        }
+      ],
+      "Bonus": [
+        {
+          "make": "Chery",
+          "model": "Bonus",
+          "body_type": "Sedan"
+        }
+      ]
+    },
+    "Haval": {
+      "H6": [
+        {
+          "make": "Haval",
+          "model": "H6",
+          "body_type": "SUV"
+        }
+      ],
+      "Jolion": [
+        {
+          "make": "Haval",
+          "model": "Jolion",
+          "body_type": "SUV"
+        }
+      ],
+      "F7": [
+        {
+          "make": "Haval",
+          "model": "F7",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Geely": {
+      "Atlas": [
+        {
+          "make": "Geely",
+          "model": "Atlas",
+          "body_type": "SUV"
+        }
+      ],
+      "Coolray": [
+        {
+          "make": "Geely",
+          "model": "Coolray",
+          "body_type": "SUV"
+        }
+      ],
+      "Emgrand": [
+        {
+          "make": "Geely",
+          "model": "Emgrand",
+          "body_type": "Sedan"
+        }
+      ]
+    },
+    "Lifan": {
+      "X60": [
+        {
+          "make": "Lifan",
+          "model": "X60",
+          "body_type": "SUV"
+        }
+      ],
+      "Solano": [
+        {
+          "make": "Lifan",
+          "model": "Solano",
+          "body_type": "Sedan"
+        }
+      ],
+      "X50": [
+        {
+          "make": "Lifan",
+          "model": "X50",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Land Rover": {
+      "Defender": [
+        {
+          "make": "Land Rover",
+          "model": "Defender",
+          "body_type": "SUV"
+        }
+      ],
+      "Discovery": [
+        {
+          "make": "Land Rover",
+          "model": "Discovery",
+          "body_type": "SUV"
+        }
+      ],
+      "Range Rover": [
+        {
+          "make": "Land Rover",
+          "model": "Range Rover",
+          "body_type": "SUV"
+        }
+      ],
+      "Range Rover Sport": [
+        {
+          "make": "Land Rover",
+          "model": "Range Rover Sport",
+          "body_type": "SUV"
+        }
+      ],
+      "Range Rover Evoque": [
+        {
+          "make": "Land Rover",
+          "model": "Range Rover Evoque",
+          "body_type": "SUV"
+        }
+      ],
+      "Freelander": [
+        {
+          "make": "Land Rover",
+          "model": "Freelander",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Porsche": {
+      "Cayenne": [
+        {
+          "make": "Porsche",
+          "model": "Cayenne",
+          "body_type": "SUV"
+        }
+      ],
+      "Macan": [
+        {
+          "make": "Porsche",
+          "model": "Macan",
+          "body_type": "SUV"
+        }
+      ],
+      "Panamera": [
+        {
+          "make": "Porsche",
+          "model": "Panamera",
+          "body_type": "Sedan"
+        }
+      ],
+      "911": [
+        {
+          "make": "Porsche",
+          "model": "911",
+          "body_type": "Coupe"
+        }
+      ]
+    },
+    "Volvo": {
+      "S60": [
+        {
+          "make": "Volvo",
+          "model": "S60",
+          "body_type": "Sedan"
+        }
+      ],
+      "S90": [
+        {
+          "make": "Volvo",
+          "model": "S90",
+          "body_type": "Sedan"
+        }
+      ],
+      "XC40": [
+        {
+          "make": "Volvo",
+          "model": "XC40",
+          "body_type": "SUV"
+        }
+      ],
+      "XC60": [
+        {
+          "make": "Volvo",
+          "model": "XC60",
+          "body_type": "SUV"
+        }
+      ],
+      "XC90": [
+        {
+          "make": "Volvo",
+          "model": "XC90",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Infiniti": {
+      "Q50": [
+        {
+          "make": "Infiniti",
+          "model": "Q50",
+          "body_type": "Sedan"
+        }
+      ],
+      "QX50": [
+        {
+          "make": "Infiniti",
+          "model": "QX50",
+          "body_type": "SUV"
+        }
+      ],
+      "QX60": [
+        {
+          "make": "Infiniti",
+          "model": "QX60",
+          "body_type": "SUV"
+        }
+      ],
+      "QX80": [
+        {
+          "make": "Infiniti",
+          "model": "QX80",
+          "body_type": "SUV"
+        }
+      ],
+      "FX": [
+        {
+          "make": "Infiniti",
+          "model": "FX",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Jeep": {
+      "Grand Cherokee": [
+        {
+          "make": "Jeep",
+          "model": "Grand Cherokee",
+          "body_type": "SUV"
+        }
+      ],
+      "Cherokee": [
+        {
+          "make": "Jeep",
+          "model": "Cherokee",
+          "body_type": "SUV"
+        }
+      ],
+      "Wrangler": [
+        {
+          "make": "Jeep",
+          "model": "Wrangler",
+          "body_type": "SUV"
+        }
+      ],
+      "Compass": [
+        {
+          "make": "Jeep",
+          "model": "Compass",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Tesla": {
+      "Model 3": [
+        {
+          "make": "Tesla",
+          "model": "Model 3",
+          "body_type": "Sedan"
+        }
+      ],
+      "Model Y": [
+        {
+          "make": "Tesla",
+          "model": "Model Y",
+          "body_type": "SUV"
+        }
+      ],
+      "Model S": [
+        {
+          "make": "Tesla",
+          "model": "Model S",
+          "body_type": "Sedan"
+        }
+      ],
+      "Model X": [
+        {
+          "make": "Tesla",
+          "model": "Model X",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Iran Khodro": {
+      "Samand": [
+        {
+          "make": "Iran Khodro",
+          "model": "Samand",
+          "body_type": "Sedan"
+        }
+      ],
+      "Dena": [
+        {
+          "make": "Iran Khodro",
+          "model": "Dena",
+          "body_type": "Sedan"
+        }
+      ],
+      "Runna": [
+        {
+          "make": "Iran Khodro",
+          "model": "Runna",
+          "body_type": "Sedan"
+        }
+      ],
+      "Peugeot 405": [
+        {
+          "make": "Iran Khodro",
+          "model": "Peugeot 405",
+          "body_type": "Sedan"
+        }
+      ]
+    },
+    "Saipa": {
+      "Tiba": [
+        {
+          "make": "Saipa",
+          "model": "Tiba",
+          "body_type": "Sedan"
+        }
+      ],
+      "Quick": [
+        {
+          "make": "Saipa",
+          "model": "Quick",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Pride": [
+        {
+          "make": "Saipa",
+          "model": "Pride",
+          "body_type": "Sedan"
+        }
+      ]
+    },
+    "ZAZ": {
+      "Chance": [
+        {
+          "make": "ZAZ",
+          "model": "Chance",
+          "body_type": "Sedan"
+        }
+      ],
+      "Slavuta": [
+        {
+          "make": "ZAZ",
+          "model": "Slavuta",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Tavria": [
+        {
+          "make": "ZAZ",
+          "model": "Tavria",
+          "body_type": "Hatchback"
+        }
+      ]
+    }
+  },
+  "version": "0.1.0"
+}

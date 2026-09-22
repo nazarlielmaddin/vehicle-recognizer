@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+data/raw/
+data/interim/
+*.pt
+*.onnx
+*.faiss
+logs/
+checkpoints/
+__pycache__/

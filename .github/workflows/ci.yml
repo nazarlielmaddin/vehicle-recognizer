@@ -1,0 +1,12 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install fastapi pytest numpy pillow pyyaml opencv-python-headless
+      - run: python -m pytest tests/ -q
+      - run: python -c "from training.taxonomy import SEED_ENTRIES, build_taxonomy; from training.taxonomy_extra import EXTRA_ENTRIES; print(len(build_taxonomy(list(SEED_ENTRIES)+[{'make':a,'model':b,'body_type':c} for a,b,c in EXTRA_ENTRIES])['models']), 'models')"

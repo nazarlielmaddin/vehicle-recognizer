@@ -1,0 +1,60 @@
+# vehicle-recognizer — production dependencies
+# Python 3.10+ recommended. GPU: CUDA 12.1+ for training.
+python-version = ">=3.10"
+
+# --- core inference ---
+torch>=2.2
+torchvision>=0.17
+timm>=0.9.16
+ultralytics>=8.2
+onnx>=1.16
+onnxruntime>=1.18
+numpy>=1.26
+opencv-python>=4.9
+Pillow>=10.3
+scikit-learn>=1.4
+scipy>=1.12
+
+# --- embeddings / retrieval ---
+faiss-cpu>=1.8  # optional; fallback to sklearn if unavailable
+# faiss-gpu for CUDA builds (install manually)
+
+# --- image quality / dedup ---
+imagehash>=4.3
+laplacian-blur via opencv (no extra dep)
+
+# --- explainability ---
+pytorch-grad-cam>=1.5  # optional, debug mode only
+
+# --- api / web ---
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
+pydantic>=2.6
+pydantic-settings>=2.2
+aiofiles>=23.2
+
+# --- training ---
+albumentations>=1.4
+pyyaml>=6.0
+tqdm>=4.66
+tensorboard>=2.16
+pandas>=2.2
+matplotlib>=3.8
+seaborn>=0.13
+
+# --- calibration / metrics ---
+scikit-learn>=1.4  # ECE computed locally, no extra dep
+netcal  # optional
+
+# --- utils ---
+typer>=0.12
+rich>=13.7
+python-dotenv>=1.0
+httpx>=0.27
+tqdm>=4.66
+
+# --- tests ---
+pytest>=8.2
+pytest-asyncio>=0.23
+httpx>=0.27
