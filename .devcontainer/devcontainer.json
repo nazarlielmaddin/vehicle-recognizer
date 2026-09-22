@@ -1,6 +1,9 @@
 {
   "name": "vehicle-recognizer",
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {
+    "ghcr.io/devcontainers/features/sshd:1": { "version": "latest" }
+  },
   "forwardPorts": [8000],
   "portsAttributes": { "8000": { "label": "Avtomobil Tanıma UI", "onAutoForward": "notify" } },
   "postCreateCommand": "pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu && pip install -r requirements.txt && python -c \"from inference.detector import VehicleDetector; VehicleDetector()._load()\" && python -c \"from inference.zeroshot import ClipZeroShot; ClipZeroShot()._load()\"",
