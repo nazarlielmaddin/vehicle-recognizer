@@ -22,7 +22,7 @@ faiss-cpu>=1.8  # optional; fallback to sklearn if unavailable
 imagehash>=4.3
 
 # --- explainability ---
-pytorch-grad-cam>=1.5  # optional, debug mode only
+grad-cam>=1.5  # optional, debug mode only (import pytorch_grad_cam)
 
 # --- api / web ---
 fastapi>=0.110
