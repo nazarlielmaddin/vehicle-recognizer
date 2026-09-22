@@ -20,7 +20,6 @@ faiss-cpu>=1.8  # optional; fallback to sklearn if unavailable
 
 # --- image quality / dedup ---
 imagehash>=4.3
-laplacian-blur via opencv (no extra dep)
 
 # --- explainability ---
 pytorch-grad-cam>=1.5  # optional, debug mode only
