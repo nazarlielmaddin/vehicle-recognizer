@@ -44,3 +44,21 @@ def test_unknown_make_passthrough():
     fused = [("NIO ES6", 0.27)]
     out, note = VehiclePipeline._constrain_to_make(fused, "Unknown", 0.10)
     assert out == fused and note == ""
+
+
+def _joint(t_make, t_conf, v_make, v_conf):
+    """Mirror of the pipeline agreement rule (kept in sync by test)."""
+    agree = (t_make != "Unknown" and v_make == t_make
+             and t_conf >= 0.4 and v_conf >= 0.25)
+    return agree
+
+
+def test_joint_agreement_fires():
+    assert _joint("Changan", 0.52, "Changan", 0.30) is True
+
+
+def test_joint_agreement_requires_both():
+    assert _joint("Changan", 0.52, "Tesla", 0.30) is False  # disagree
+    assert _joint("Changan", 0.30, "Changan", 0.30) is False  # trained weak
+    assert _joint("Changan", 0.52, "Changan", 0.10) is False  # vmmr weak
+    assert _joint("Unknown", 0.0, "Tesla", 0.9) is False

@@ -74,14 +74,23 @@ out.innerHTML=`<div class="card"><h3>Ümumi nəticə: ${j.fused_model} (${(j.fus
 ${(j.fused_alternatives||[]).map(a=>`<div>${a.label} — ${(a.confidence*100).toFixed(1)}%</div>`).join('')}
 <h4>Hər şəkil üzrə</h4>${j.per_image.map(showOne).join('')}</div>`;};
 function cls(s){return s==='CONFIDENT'?'conf':s==='UNCERTAIN'?'unc':'unk';}
+function jointTitle(v){
+  const mod = (v.model && v.model!=='Unknown') ? ` ${v.model}` : ' (model təyin edilmədi)';
+  const mark = (v.ensemble && v.ensemble.joint) ? ' ✅' : '';
+  return `Avtomobil #${v.id} — ${v.make}${mod}${mark}`;
+}
 function showOne(r){if(!r.vehicles||!r.vehicles.length)return `<div class="card"><b>${r.filename}</b>: AVTOMOBİL TAPILMADI — ${r.message||''}</div>`;
-return r.vehicles.map(v=>`<div class="card"><h3>Avtomobil #${v.id} — ${v.make} ${v.model}</h3>
+return r.vehicles.map(v=>`<div class="card"><h3>${jointTitle(v)}</h3>
 <span class="badge ${cls(v.status)}">${STATUS[v.status]||v.status}</span>
 <div class="btype">🚐 Ban növü: <b>${BODY[v.body_type]||v.body_type}</b> (${(v.body_conf*100).toFixed(1)}%)</div>
-<div>Marka: <b>${v.make}</b> (${(v.make_conf*100).toFixed(1)}%) · Model: <b>${v.model}</b>${v.year?` · İl: <b>${v.year}</b>`:''}</div>
+<div>Marka: <b>${v.make}</b> (${(v.make_conf*100).toFixed(1)}%) · Model: <b>${v.model==='Unknown'?'təyin edilmədi':v.model}</b>${v.year?` · İl: <b>${v.year}</b>`:''}</div>
 <div>Rakurs: <b>${VIEW[v.orientation]||v.orientation}</b></div>
 <div>Əminlik: <b>${(v.confidence*100).toFixed(1)}%</b> · det ${(v.det_conf*100).toFixed(0)}% · NN-oxşarlıq ${v.nn_similarity}</div>
-<div><small>Mənbə: ${SRC[v.evidence_source]||v.evidence_source||'məlum deyil'}</small></div>
+${v.ensemble?`<div class="btype">⚖️ Ortaq qərar: <b>${v.ensemble.final}</b> — YOLO ${v.ensemble.detector.label} ${(v.ensemble.detector.conf*100).toFixed(0)}%${
+v.ensemble.make_trained?` · Təlim-v2: ${v.ensemble.make_trained.label} ${(v.ensemble.make_trained.conf*100).toFixed(0)}%`:''}${
+v.ensemble.make_aux?` · Təlim-v1: ${v.ensemble.make_aux.label} ${(v.ensemble.make_aux.conf*100).toFixed(0)}%`:''}${
+v.ensemble.vmmr?` · VMMR: ${v.ensemble.vmmr.make} ${v.ensemble.vmmr.model} ${(v.ensemble.vmmr.conf*100).toFixed(0)}%`:''}${
+v.ensemble.joint?' · <b>RAZILAŞMA ✅</b>':' · fikir ayrılığı'}</div>`:''}
 <div class="bar"><i style="width:${v.confidence*100}%"></i></div>
 <b>Alternativlər</b>${v.alternatives.map(a=>`<div>${a.label} — ${(a.confidence*100).toFixed(1)}%</div>`).join('')}
 ${v.abstain_reasons.length?`<small>⚠ ${v.abstain_reasons.join('; ')}</small>`:''}

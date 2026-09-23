@@ -7,8 +7,9 @@ system:
   log_level: INFO
 
 paths:
-  detector_weights: "models/detector/yolo11n.pt"   # measured 57ms vs 265ms (11m), same boxes on gate frames
+  detector_weights: "models/detector/yolo11m.pt"   # 11m restored: stable crops for trained heads (nano shifted them)
   make_weights: "models/make/best.pt"              # trained by training/train_make.py
+  make_weights_aux: "models/make/v1_47cls.pt"      # previous generation head (47 cls) — ensemble vote
   model_weights: "models/model/best.pt"            # trained by training/train_finegrained.py
   body_weights: "models/body_type/best.pt"
   viewpoint_weights: "models/viewpoint/best.pt"

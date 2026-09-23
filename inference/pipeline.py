@@ -60,6 +60,8 @@ class VehiclePipeline:
         self.full_makes = list(makes)  # full taxonomy coverage (anti-forgetting backstop)
         P = self.cfg["paths"]
         self.make_clf = TimmClassifier(P["make_weights"], makes)
+        self.make_aux = TimmClassifier(P.get("make_weights_aux", ""), makes) \
+            if P.get("make_weights_aux") else None  # previous-gen vote (optional)
         self.model_clf = TimmClassifier(P["model_weights"], models)
         self.body_clf = TimmClassifier(P["body_weights"], BODY)
         self.view_clf = TimmClassifier(P["viewpoint_weights"], VIEWPOINT)
@@ -194,8 +196,35 @@ class VehiclePipeline:
             # recognizable. Blend weight follows trained confidence (adaptive):
             # confident-trained → trained dominates; flat-trained → zs dominates.
             make_hybrid = False
+            make_top_t = None
+            make_top_z = None
+            aux_top = None
+            aux_note = ""
             if self.make_clf.available:
                 make_top_t, make_p_t = self._predict_head(self.make_clf, rgb)
+                # DUAL-HEAD ENSEMBLE: v2 (37 cls, crops) + v1 (47 cls, mix).
+                # Different data/views -> complementary errors; equal vote.
+                aux_note = ""
+                if self.make_aux is not None and self.make_aux.available:
+                    try:
+                        aux_top, aux_p = self._predict_head(self.make_aux, rgb)
+                        auxd: dict[str, float] = {}
+                        for lab, pr in zip(self.make_aux.classes, aux_p):
+                            lab = "Land Rover" if lab == "Land" else lab  # stale-name fix
+                            auxd[lab] = auxd.get(lab, 0.0) + float(pr)
+                        maind = {lab: float(pr) for lab, pr in
+                                 zip(self.make_clf.classes, make_p_t)}
+                        old_top = make_top_t[0][0]
+                        uni = {k: 0.5 * auxd.get(k, 0.0) + 0.5 * maind.get(k, 0.0)
+                               for k in set(auxd) | set(maind)}
+                        tot = sum(uni.values()) + 1e-9
+                        ranked = sorted(uni.items(), key=lambda kv: -kv[1])
+                        make_top_t = [(k, v / tot) for k, v in ranked[:5]]
+                        aux_note = ("dual-head agree " + ranked[0][0]
+                                    if ranked and ranked[0][0] == old_top
+                                    else "dual-head ensemble")
+                    except Exception as e:
+                        aux_note = f"aux head failed: {str(e)[:60]}"
                 make_top_z, make_p_z, ok_z = self._zs_head(
                     c["full"], self.full_makes, "make", feat=zfeat)
                 zs_used = zs_used or ok_z
@@ -228,11 +257,22 @@ class VehiclePipeline:
                         vmmr_year = vmmr_top[0][2]
                 except Exception as e:
                     vmmr_note = f"vmmr-expert failed: {str(e)[:80]}"
+            # JOINT DECISION (YOLO context + trained head + VMMR expert):
+            # two independent channels agreeing on a make outranks either alone.
+            agree = False
             if vmmr_top:
                 vm, vmd, _yr, vp = vmmr_top[0]
+                t_make, t_conf = (make_top_t[0] if make_top_t
+                                  else ("Unknown", 0.0))
+                if (self.make_clf.available and vm == t_make and t_conf >= 0.4
+                        and vp >= 0.25):
+                    agree = True
+                    make_top = [(t_make, min(0.95, t_conf + 0.1))] + \
+                        [x for x in make_top if x[0] != t_make][:4]
+                    vmmr_note = f"JOINT: trained+VMMR agree {t_make}"
                 # make: adopt when ours is weak and VMMR is confident on a
                 # make outside our trained set (e.g. Subaru); agree-boost else
-                if (vp >= 0.5 and vm not in self.make_clf.classes
+                elif (vp >= 0.5 and vm not in self.make_clf.classes
                         and make_top[0][1] < 0.4 and make_top[0][0] != "Unknown"):
                     make_top = [(vm, vp)] + [x for x in make_top if x[0] != vm][:4]
                     vmmr_note = f"vmmr-expert adopts {vm} ({vp:.2f})"
@@ -330,6 +370,11 @@ class VehiclePipeline:
                 reasons = [hier_note + " (confidence = make-level)"] + reasons
             elif abstain:
                 status = "UNKNOWN"
+            elif agree and top1 >= 0.60 and model_label != "Unknown":
+                # JOINT DECISION: two independent channels agree on the make
+                # and the model is consistent — the strongest honest signal
+                status = "CONFIDENT"
+                reasons = ["JOINT DECISION: trained head + VMMR expert agree"] + reasons
             elif not trained and zs_used:
                 # zero-shot evidence only → real guess, but never CONFIDENT
                 status = "UNCERTAIN"
@@ -350,14 +395,39 @@ class VehiclePipeline:
                 reasons = [self._last_gate_note] + reasons
             if vmmr_note:
                 reasons = [vmmr_note] + reasons
+            if aux_note:
+                reasons = [aux_note] + reasons
             # alternatives: same-make confusions first (most likely look-alikes);
             # drawn from the pre-constraint list so review keeps full context
             mk_name = make_top[0][0]
             alt_pool = list(fused_all[1:6] if fused else fused_all[:5])
             same = [x for x in alt_pool if x[0] == mk_name or x[0].startswith(mk_name + " ")]
             alt_ordered = (same + [x for x in alt_pool if x not in same])[:3]
+            # JOINT DECISION object: every channel's vote, visible in UI/API
+            ensemble = {
+                "detector": {"label": c.get("label_det", "car"),
+                             "conf": round(float(c.get("conf_det", 0.0)), 3)},
+                "make_trained": ({
+                    "label": make_top_t[0][0],
+                    "conf": round(float(make_top_t[0][1]), 4)} if make_top_t else None),
+                "make_aux": ({
+                    "label": aux_top[0][0] if aux_top[0][0] != "Land" else "Land Rover",
+                    "conf": round(float(aux_top[0][1]), 4)} if aux_top else None),
+                "vmmr": ({
+                    "make": vmmr_top[0][0], "model": vmmr_top[0][1],
+                    "year": vmmr_top[0][2],
+                    "conf": round(float(vmmr_top[0][3]), 4)} if vmmr_top else None),
+                "zeroshot_make": ({
+                    "label": make_top_z[0][0],
+                    "conf": round(float(make_top_z[0][1]), 4)} if make_top_z else None),
+                "agreement": ("trained+VMMR agree " + mk_name if agree
+                              else ("split" if vmmr_top or make_hybrid else "single-channel")),
+                "joint": agree,
+                "final": model_label if model_label != "Unknown" else mk_name,
+            }
             vehicles.append({
                 "id": i + 1, "box": c["box"], "det_conf": round(float(c["conf_det"]), 3),
+                "ensemble": ensemble,
                 "evidence_source": ("trained" if trained
                                     else ("trained-make+zero-shot" if self.make_clf.available
                                           else ("zero-shot-clip" if zs_used else "none"))),
