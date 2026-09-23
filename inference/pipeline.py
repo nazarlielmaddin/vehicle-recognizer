@@ -43,11 +43,17 @@ class VehiclePipeline:
                                         self.cfg["system"]["device"])
         # class lists come from taxonomy if present, else minimal fallback
         tax = Path(self.cfg["paths"]["taxonomy"])
+        self._model_body: dict[str, str] = {}
         if tax.exists():
             import json
             t = json.loads(tax.read_text(encoding="utf-8"))
             makes = t.get("makes", ["Unknown"])
             models = t.get("models", ["Unknown"])
+            for mk, sub in (t.get("detail") or {}).items():
+                for md, entries in (sub or {}).items():
+                    bts = [e.get("body_type", "Unknown") for e in entries or []]
+                    body = max(set(bts), key=bts.count) if bts else "Unknown"
+                    self._model_body[f"{mk} {md}"] = body
         else:
             makes, models = ["Unknown"], ["Unknown"]
         P = self.cfg["paths"]
@@ -59,6 +65,7 @@ class VehiclePipeline:
         self.store = EmbeddingStore.load(P["vector_index"])
         self.T = float(self.cfg["calibration"].get("temperature", 1.0))
         self._zs = None  # lazy zero-shot fallback, built on first need
+        self._last_gate_note = ""
 
     @property
     def zero_shot(self) -> ClipZeroShot:
@@ -66,6 +73,26 @@ class VehiclePipeline:
             device = "cuda" if self.make_clf.device == "cuda" else "cpu"
             self._zs = ClipZeroShot(device=device)
         return self._zs
+
+    @staticmethod
+    def _allowed_bodies(det_label: str) -> set[str]:
+        """YOLO-class gate: a 'car' crop must never yield truck/bus models."""
+        if det_label == "truck":
+            return {"LightTruck", "HeavyTruck", "Pickup", "PanelVan", "Van"}
+        if det_label == "bus":
+            return {"Bus", "Minibus"}
+        return {"Sedan", "Hatchback", "Coupe", "Convertible", "Wagon", "SUV",
+                "Crossover", "MPV", "Pickup", "Van", "PanelVan", "LightTruck",
+                "Other", "Unknown"}
+
+    def _gate_models(self, top: list[tuple[str, float]], det_label: str,
+                     k: int = 5) -> list[tuple[str, float]]:
+        allowed = self._allowed_bodies(det_label)
+        kept = [x for x in top if self._model_body.get(x[0], "Unknown") in allowed]
+        dropped = len(top) - len(kept)
+        self._last_gate_note = (
+            f"yolo={det_label}: {dropped} incompatible body types excluded" if dropped else "")
+        return kept[:k] if kept else top[:k]
 
     def _predict_head(self, clf: TimmClassifier, rgb: np.ndarray, k=5):
         if not clf.available:
@@ -133,8 +160,11 @@ class VehiclePipeline:
             if self.model_clf.available:
                 model_top, model_p = self._predict_head(self.model_clf, rgb)
             else:
-                model_top, model_p, ok = self._zs_head(c["full"], self.model_clf.classes, "model", feat=zfeat)
+                model_top, model_p, ok = self._zs_head(
+                    c["full"], self.model_clf.classes, "model", k=15, feat=zfeat)
                 zs_used = zs_used or ok
+            # hard gate BEFORE fusion: incompatible bodies can never win
+            model_top = self._gate_models(model_top, c.get("label_det", "car"), k=5)
             if self.body_clf.available:
                 body_top, body_p = self._predict_head(self.body_clf, rgb)
             else:
@@ -198,6 +228,8 @@ class VehiclePipeline:
             if nn_error:
                 reasons = [f"retrieval unavailable: {nn_error}"] + reasons
             reasons = reasons_badge + reasons
+            if self._last_gate_note:
+                reasons = [self._last_gate_note] + reasons
             # alternatives: same-make confusions first (most likely look-alikes)
             mk_name = make_top[0][0]
             alt_pool = list(fused[1:6])
