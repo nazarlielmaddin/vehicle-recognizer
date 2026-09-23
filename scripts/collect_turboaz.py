@@ -120,6 +120,15 @@ def main(pages: int = 5, per_make: int = 25, imgs_per_listing: int = 3,
         raise typer.Exit("robots.txt disallows /autos — aborting")
     root = Path(out); root.mkdir(parents=True, exist_ok=True)
     counts: dict[str, int] = {}
+    # resume: seed quotas from already-downloaded provenance (no re-download)
+    for mp in root.rglob("*.meta.json"):
+        try:
+            mk = json.loads(mp.read_text(encoding="utf-8")).get("make", "")
+            if mk:
+                counts[mk] = counts.get(mk, 0) + 1
+        except Exception:
+            pass
+    print(f"resumed counts: {len(counts)} makes, {sum(counts.values())} images")
     client = httpx.Client(headers=UA, follow_redirects=True)
     for pg in range(1, pages + 1):
         try:

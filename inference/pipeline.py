@@ -56,6 +56,7 @@ class VehiclePipeline:
                     self._model_body[f"{mk} {md}"] = body
         else:
             makes, models = ["Unknown"], ["Unknown"]
+        self.full_makes = list(makes)  # full taxonomy coverage (anti-forgetting backstop)
         P = self.cfg["paths"]
         self.make_clf = TimmClassifier(P["make_weights"], makes)
         self.model_clf = TimmClassifier(P["model_weights"], models)
@@ -126,6 +127,40 @@ class VehiclePipeline:
         except Exception:
             return [("Unknown", 0.0)], np.array([1.0]), False
 
+    @staticmethod
+    def _blend_make_distributions(trained_top, trained_proba, trained_classes,
+                                  zs_top, zs_proba, full_makes) -> tuple[list, bool]:
+        """Anti-forgetting backoff: P = lam*P_trained + (1-lam)*P_zs over union,
+        lam = trained top1 confidence. Returns (ranked top-5, used_backstop)."""
+        lam = float(trained_top[0][1]) if trained_top else 0.0
+        if lam >= 0.5:
+            return trained_top, False
+        blended: dict[str, float] = {}
+        for j, cls in enumerate(trained_classes):
+            if j < len(trained_proba):
+                blended[cls] = blended.get(cls, 0.0) + lam * float(trained_proba[j])
+        for j, cls in enumerate(full_makes):
+            if j < len(zs_proba):
+                blended[cls] = blended.get(cls, 0.0) + (1.0 - lam) * float(zs_proba[j])
+        tot = sum(blended.values()) + 1e-9
+        ranked = sorted(blended.items(), key=lambda kv: -kv[1])
+        return [(k, v / tot) for k, v in ranked[:5]], True
+
+    @staticmethod
+    def _constrain_to_make(fused: list, make_name: str,
+                           same_min: float) -> tuple[list, str]:
+        """Fantasy pairs forbidden: keep same-make candidates, else empty + note."""
+        if make_name == "Unknown":
+            return fused, ""
+        same = [x for x in fused if x[0] == make_name or x[0].startswith(make_name + " ")]
+        if same and same[0][1] >= same_min:
+            return same + [x for x in fused if x not in same], ""
+        dropped = fused[0][0] if fused else "none"
+        if same:
+            return [], (f"best {make_name} model {same[0][0]} too weak "
+                        f"({same[0][1]:.2f}) — model unknown")
+        return [], f"model {dropped} excluded (not {make_name}) — model unknown"
+
     def infer_image(self, bgr: np.ndarray) -> dict:
         q = analyze_quality(bgr)
         try:
@@ -152,8 +187,24 @@ class VehiclePipeline:
                     zfeat = self.zero_shot.encode_image(c["full"])
                 except Exception:
                     zfeat = None
+            # HYBRID MAKE (anti catastrophic forgetting): trained head knows its
+            # classes well; zero-shot backstop keeps the other taxonomy makes
+            # recognizable. Blend weight follows trained confidence (adaptive):
+            # confident-trained → trained dominates; flat-trained → zs dominates.
+            make_hybrid = False
             if self.make_clf.available:
-                make_top, make_p = self._predict_head(self.make_clf, rgb)
+                make_top_t, make_p_t = self._predict_head(self.make_clf, rgb)
+                make_top_z, make_p_z, ok_z = self._zs_head(
+                    c["full"], self.full_makes, "make", feat=zfeat)
+                zs_used = zs_used or ok_z
+                make_top, make_hybrid = self._blend_make_distributions(
+                    make_top_t, make_p_t, self.make_clf.classes,
+                    make_top_z, make_p_z, self.full_makes)
+                if make_hybrid:
+                    zs_used = True
+                    make_p = make_p_t
+                else:
+                    make_top, make_p = make_top_t, make_p_t
             else:
                 make_top, make_p, ok = self._zs_head(c["full"], self.make_clf.classes, "make", feat=zfeat)
                 zs_used = zs_used or ok
@@ -209,22 +260,8 @@ class VehiclePipeline:
             # "Lada BYD Seagull") are a hard failure and are forbidden:
             # the shown model must belong to the shown make, always.
             make_name, make_conf = make_top[0]
-            hier_note = ""
             same_min = float(self.cfg["unknown"].get("same_make_model_min", 0.10))
-            if make_name != "Unknown":
-                same = [x for x in fused
-                        if x[0] == make_name or x[0].startswith(make_name + " ")]
-                if same and same[0][1] >= same_min:
-                    fused = same + [x for x in fused if x not in same]
-                else:
-                    dropped = fused[0][0] if fused else "none"
-                    if same:
-                        hier_note = (f"best {make_name} model {same[0][0]} too weak "
-                                     f"({same[0][1]:.2f}) — model unknown")
-                    else:
-                        hier_note = (f"model {dropped} excluded (not {make_name}) "
-                                     f"— model unknown")
-                    fused = []
+            fused, hier_note = self._constrain_to_make(fused, make_name, same_min)
             if fused:
                 top1 = fused[0][1]
                 top2 = fused[1][1] if len(fused) > 1 else 0.0
@@ -260,6 +297,9 @@ class VehiclePipeline:
             if nn_error:
                 reasons = [f"retrieval unavailable: {nn_error}"] + reasons
             reasons = reasons_badge + reasons
+            if make_hybrid:
+                reasons = [f"hybrid make (trained uncertain → zero-shot backstop blended, "
+                           f"top={make_top[0][0]} {make_top[0][1]:.2f})"] + reasons
             if self._last_gate_note:
                 reasons = [self._last_gate_note] + reasons
             # alternatives: same-make confusions first (most likely look-alikes);
