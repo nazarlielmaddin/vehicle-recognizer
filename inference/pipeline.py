@@ -1,7 +1,9 @@
-"""Production inference pipeline — the full required chain.
+"""Production inference pipeline.
 
-INPUT → QUALITY → DETECTION → CROP → VIEWPOINT → FEATURES → MAKE → MODEL
-→ BODY → FUSION → CALIBRATION → UNKNOWN → FINAL RESULT
+Modes (configs/default.yaml -> pipeline.mode):
+  vmmr-only : VMMR tuned head on the full frame (no detector, no CLIP,
+              no old heads). Body from taxonomy table. One vehicle / image.
+  full      : legacy multi-stage chain (detector + heads + fusion).
 """
 from __future__ import annotations
 from pathlib import Path
@@ -71,6 +73,145 @@ class VehiclePipeline:
         self._zs = None  # lazy zero-shot fallback, built on first need
         self._last_gate_note = ""
         self.vmmr = VMMRExpert()  # 8949-class expert file; lazy-loads on first use
+        self.mode = str(self.cfg.get("pipeline", {}).get("mode", "full")).lower()
+        import json as _js2
+        self._tax_detail = {}
+        try:
+            if tax.exists():
+                self._tax_detail = _js2.loads(tax.read_text(encoding="utf-8")).get("detail", {})
+        except Exception:
+            pass
+
+    def _body_of(self, make: str, model: str) -> tuple[str, float]:
+        """Deterministic body lookup from taxonomy (vmmr-only mode)."""
+        try:
+            entries = (self._tax_detail.get(make, {}) or {}).get(model, [])
+            bts = [e.get("body_type", "Unknown") for e in entries or []]
+            if bts:
+                body = max(set(bts), key=bts.count)
+                return body, round(bts.count(body) / len(bts), 4)
+        except Exception:
+            pass
+        return "Unknown", 0.0
+
+    def infer_vmmr_only(self, bgr: np.ndarray) -> dict:
+        """VMMR-only path: full frame -> tuned make + 8949 fallback -> constraint.
+        No detector, no CLIP, no old heads. One vehicle per image."""
+        from .fusion import decide_unknown
+        from training.taxonomy import match_taxonomy_model
+        q = analyze_quality(bgr)
+        h, w = bgr.shape[:2]
+        reasons = ["vmmr-only mode: full-frame inference, one vehicle per image",
+                   "detector disabled — det_conf 0.0 by definition"]
+        if not self.vmmr.tuned_available:
+            return {"quality": to_dict(q), "vehicles": [], "status": "NO_MODEL",
+                    "message": "models/vmmr/make_tuned.pt missing — run scripts/train_vmmr.py"}
+        try:
+            make_top, make_p = self.vmmr.predict_tuned(bgr, k=5)
+            # center-crop second opinion (no detector): gate cars are central;
+            # averages out booth/barrier background. 0.65 full + 0.35 center.
+            h0, w0 = bgr.shape[:2]
+            cc = bgr[int(h0 * 0.15):int(h0 * 0.85), int(w0 * 0.15):int(w0 * 0.85)]
+            if min(cc.shape[:2]) >= 100:
+                cc_top, cc_p = self.vmmr.predict_tuned(cc, k=5)
+                if len(cc_p) == len(make_p):
+                    avg = 0.65 * make_p + 0.35 * cc_p
+                    idx = np.argsort(avg)[::-1][:5]
+                    tot = float(avg[idx].sum()) + 1e-9
+                    make_top = [(self.vmmr.load_tuned()[1][i], float(avg[i] / tot))
+                                for i in idx]
+                    make_p = avg / tot
+        except Exception as e:
+            return {"quality": to_dict(q), "vehicles": [], "status": "ERROR",
+                    "message": f"tuned head failed: {str(e)[:120]}"}
+        if not make_top:
+            return {"quality": to_dict(q), "vehicles": [],
+                    "status": "UNKNOWN", "message": "no make prediction"}
+        make_name, make_conf = make_top[0]
+        # base expert: model/year candidates + agreement signal
+        base_top: list = []
+        year = ""
+        agree = False
+        try:
+            base_top = self.vmmr.predict(bgr, self.full_makes, k=15)
+            if base_top:
+                year = base_top[0][2]
+                bm, _, _, bp = base_top[0]
+                if bm == make_name and make_conf >= 0.4 and bp >= 0.25:
+                    agree = True
+                    make_conf = min(0.95, make_conf + 0.1)
+                    reasons.append(f"JOINT: tuned+VMMR agree {make_name}")
+        except Exception as e:
+            reasons.append(f"vmmr-base failed: {str(e)[:80]}")
+        # map base models into taxonomy, then constrain to tuned make
+        cands: list[tuple[str, float]] = []
+        for bm, bmd, _y, bp in base_top:
+            if bp < 0.10:
+                continue
+            hit = match_taxonomy_model(bm, bmd, self._tax_detail)
+            if hit:
+                label = f"{bm} {hit}" if not hit.startswith(bm) else hit
+                cands.append((label, 0.5 * bp))
+        same_min = float(self.cfg["unknown"].get("same_make_model_min", 0.10))
+        # review alternatives: same-make base candidates only (never foreign names)
+        same_base = [x for x in cands
+                     if x[0] == make_name or x[0].startswith(make_name + " ")]
+        alt = same_base[:3]
+        fused, hier_note = self._constrain_to_make(cands, make_name, same_min)
+        if hier_note:
+            reasons.append(hier_note)
+        if fused:
+            model_label, top1 = fused[0][0], fused[0][1]
+            top2 = fused[1][1] if len(fused) > 1 else 0.0
+        else:
+            model_label, top1, top2 = "Unknown", make_conf, 0.0
+        ent = entropy(make_p)
+        u = self.cfg["unknown"]
+        abstain, ab_reasons = decide_unknown(
+            top1, top2, ent, 0.0, q.quality,
+            u["min_confidence"], u["min_margin"], u["max_entropy"],
+            99.0, u["poor_quality_abstain"])
+        reasons.extend(ab_reasons)
+        if model_label == "Unknown" and make_conf >= 0.4:
+            status = "UNCERTAIN"
+        elif abstain:
+            status = "UNKNOWN"
+        elif agree and top1 >= 0.60 and model_label != "Unknown":
+            status = "CONFIDENT"
+            reasons.append("JOINT DECISION: tuned+VMMR agree with consistent model")
+        elif top1 >= 0.75 and model_label != "Unknown":
+            status = "CONFIDENT"
+        else:
+            status = "UNCERTAIN"
+        body, body_conf = self._body_of(make_name, model_label) \
+            if model_label != "Unknown" else ("Unknown", 0.0)
+        v = {
+            "id": 1, "box": [0, 0, w, h], "det_conf": 0.0,
+            "evidence_source": "vmmr-tuned",
+            "ensemble": {
+                "detector": None,
+                "vmmr_tuned": {"label": make_name, "conf": round(float(make_conf), 4)},
+                "vmmr_base": ({"make": base_top[0][0], "model": base_top[0][1],
+                               "year": base_top[0][2],
+                               "conf": round(float(base_top[0][3]), 4)}
+                              if base_top else None),
+                "agreement": ("tuned+VMMR agree " + make_name if agree else "split"),
+                "joint": agree,
+                "final": model_label if model_label != "Unknown" else make_name,
+                "mode": "vmmr-only",
+            },
+            "make": make_name, "make_conf": round(float(make_conf), 4),
+            "model": model_label, "confidence": round(float(top1), 4),
+            "year": year or None,
+            "body_type": body, "body_conf": body_conf,
+            "orientation": "UNKNOWN",
+            "status": status,
+            "alternatives": [{"label": l, "confidence": round(float(p), 4)} for l, p in alt],
+            "nn_similarity": 0.0,
+            "entropy": round(float(ent), 3),
+            "abstain_reasons": reasons,
+        }
+        return {"quality": to_dict(q), "vehicles": [v], "status": "OK"}
 
     @property
     def zero_shot(self) -> ClipZeroShot:
@@ -156,6 +297,8 @@ class VehiclePipeline:
         """Fantasy pairs forbidden: keep same-make candidates, else empty + note."""
         if make_name == "Unknown":
             return fused, ""
+        if not fused:
+            return [], "no model candidates — model unknown"
         same = [x for x in fused if x[0] == make_name or x[0].startswith(make_name + " ")]
         if same and same[0][1] >= same_min:
             return same + [x for x in fused if x not in same], ""
@@ -166,6 +309,8 @@ class VehiclePipeline:
         return [], f"model {dropped} excluded (not {make_name}) — model unknown"
 
     def infer_image(self, bgr: np.ndarray) -> dict:
+        if self.mode == "vmmr-only":
+            return self.infer_vmmr_only(bgr)
         q = analyze_quality(bgr)
         try:
             dets = self.detector.detect(bgr)

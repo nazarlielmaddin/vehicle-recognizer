@@ -31,12 +31,17 @@ def parse_mmy(label: str, known_makes: list[str]) -> tuple[str, str, str]:
 
 class VMMRExpert:
     def __init__(self, weights: str = "models/vmmr/vehicle_classifier.pth",
+                 tuned: str = "models/vmmr/make_tuned.pt",
                  device: str = "cpu"):
         self.weights = Path(weights)
+        self.tuned_path = Path(tuned)
         self.device = device
         self.available = self.weights.exists()
+        self.tuned_available = self.tuned_path.exists()
         self._model = None
+        self._tuned = None
         self.mapping: dict = {}
+        self.tuned_classes: list[str] = []
 
     def _load(self):
         import torch
@@ -56,6 +61,44 @@ class VMMRExpert:
             self._model = m
             self.mapping = mapping or {}
         return self._model
+
+    def _prep(self, crop_bgr: np.ndarray, img: int = IMG):
+        import torch
+        from PIL import Image
+        rgb = cv2.cvtColor(crop_bgr, cv2.COLOR_BGR2RGB)
+        pil = Image.fromarray(rgb).resize((img, img), Image.BILINEAR)
+        arr = np.asarray(pil).astype(np.float32) / 255.0
+        mean = np.array([0.485, 0.456, 0.406], np.float32)
+        std = np.array([0.229, 0.224, 0.225], np.float32)
+        t = torch.from_numpy(((arr - mean) / std).transpose(2, 0, 1)[None]).float()
+        return t.to(self.device)
+
+    def load_tuned(self, img_size: int = 300):
+        """Fine-tuned head (our taxonomy) — the primary in vmmr-only mode."""
+        import torch
+        import timm
+        if self._tuned is None:
+            ckpt = torch.load(self.tuned_path, map_location="cpu")
+            classes = [c.replace("_", " ") for c in ckpt.get("classes", [])]
+            m = timm.create_model(ckpt.get("backbone", "efficientnet_b4"),
+                                  pretrained=False, num_classes=max(len(classes), 1))
+            m.load_state_dict(ckpt.get("state_dict", ckpt), strict=False)
+            m.eval().to(self.device)
+            self._tuned = (m, classes, ckpt)
+        return self._tuned
+
+    def predict_tuned(self, crop_bgr: np.ndarray,
+                      k: int = 5) -> tuple[list[tuple[str, float]], object]:
+        import torch
+        import numpy as np
+        if not self.tuned_available:
+            return [], np.array([1.0])
+        m, classes, ckpt = self.load_tuned()
+        img = ckpt.get("config", {}).get("img_size", 300)
+        with torch.no_grad():
+            proba = torch.softmax(m(self._prep(crop_bgr, img)), 1)[0].cpu().numpy()
+        idx = np.argsort(proba)[::-1][:k]
+        return [(classes[i], float(proba[i])) for i in idx], proba
 
     def predict(self, crop_bgr: np.ndarray, known_makes: list[str],
                 k: int = 5) -> list[tuple[str, str, str, float]]:

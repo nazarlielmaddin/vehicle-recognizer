@@ -33,9 +33,13 @@ def _verify(jp: Path, min_side: int) -> bool:
 
 @app.command()
 def main(out: str = "data/processed/makes", rare_out: str = "data/processed/rare",
-         min_side: int = 100, val_frac: float = VAL_FRAC, test_frac: float = TEST_FRAC):
+         min_side: int = 100, val_frac: float = VAL_FRAC, test_frac: float = TEST_FRAC,
+         mix_full: float = 0.0):
+    """mix_full: also include the source full frame when its YOLO box area >=
+    threshold (car-dominant frames only). Same split as its crop (no leakage).
+    For full-frame inference robustness (vmmr-only mode)."""
     crops = Path("data/interim/crops")
-    by_make: dict[str, dict[str, Path]] = {}
+    by_make: dict[str, dict[str, tuple]] = {}
     bad = 0
     for jp in sorted(crops.rglob("*.jpg")):
         rel = jp.relative_to(crops).parts
@@ -49,7 +53,18 @@ def main(out: str = "data/processed/makes", rare_out: str = "data/processed/rare
             continue
         lid = jp.stem
         # one file per listing id (filter already dedups; keep first deterministically)
-        by_make.setdefault(mk, {}).setdefault(lid, jp)
+        if lid in by_make.setdefault(mk, {}):
+            continue
+        src, area = "", 0.0
+        mp = jp.parent / f"{lid}.meta.json"
+        if mp.exists():
+            try:
+                import json as _js
+                mm = _js.loads(mp.read_text(encoding="utf-8"))
+                src, area = mm.get("src", ""), float(mm.get("box_area", 0.0))
+            except Exception:
+                pass
+        by_make[mk][lid] = (jp, src, area)
     out_p, rare_p = Path(out), Path(rare_out)
     for d in (out_p / "train", out_p / "val", out_p / "test", rare_p):
         if d.exists():
@@ -65,7 +80,7 @@ def main(out: str = "data/processed/makes", rare_out: str = "data/processed/rare
             dd = rare_p / mk
             dd.mkdir(parents=True, exist_ok=True)
             for lid in lids:
-                shutil.copy2(by_make[mk][lid], dd / f"{lid}.jpg")
+                shutil.copy2(by_make[mk][lid][0], dd / f"{lid}.jpg")
             rare[mk] = len(lids)
             continue
         mapping.append(mk)
@@ -74,21 +89,29 @@ def main(out: str = "data/processed/makes", rare_out: str = "data/processed/rare
         val_ids = set(lids[:n_val])
         test_ids = set(lids[n_val:n_val + n_tst])
         tr_ids = [l for l in lids if l not in val_ids and l not in test_ids]
+
+        def _put(lid: str, split: str) -> int:
+            dd = out_p / split / mk
+            dd.mkdir(parents=True, exist_ok=True)
+            jp, src, area = by_make[mk][lid]
+            shutil.copy2(jp, dd / f"{lid}.jpg")
+            n = 1
+            if mix_full > 0 and src and area >= mix_full:
+                try:
+                    with Image.open(src) as im:
+                        im.verify()
+                    shutil.copy2(src, dd / f"{lid}_full.jpg")
+                    n = 2
+                except Exception:
+                    pass
+            return n
+
         for lid in tr_ids:
-            dd = out_p / "train" / mk
-            dd.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(by_make[mk][lid], dd / f"{lid}.jpg")
-            n_tr += 1
+            n_tr += _put(lid, "train")
         for lid in val_ids:
-            dd = out_p / "val" / mk
-            dd.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(by_make[mk][lid], dd / f"{lid}.jpg")
-            n_va += 1
+            n_va += _put(lid, "val")
         for lid in test_ids:
-            dd = out_p / "test" / mk
-            dd.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(by_make[mk][lid], dd / f"{lid}.jpg")
-            n_te += 1
+            n_te += _put(lid, "test")
     (Path(out).parent / "class_mapping.json").write_text(
         json.dumps({"classes": mapping, "val_frac": val_frac, "test_frac": test_frac,
                     "rule": "stratified-within-class, min-2-images"},

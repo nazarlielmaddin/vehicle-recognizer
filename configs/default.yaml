@@ -71,3 +71,6 @@ api:
   max_images_per_request: 8
   allowed_mime: ["image/jpeg", "image/png", "image/webp"]
   cors_origins: ["*"]
+
+pipeline:
+  mode: vmmr-only   # vmmr-only | full (legacy multi-stage chain)
