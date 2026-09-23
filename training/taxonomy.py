@@ -30,6 +30,8 @@ MAKE_ALIASES = {
     "zeekr": "Zeekr", "li auto": "Li Auto", "lixiang": "Li Auto", "li": "Li Auto",
     "nio": "NIO", "xpeng": "XPeng", "wuling": "Wuling",
     "moskvich": "Moskvich", "moskvitch": "Moskvich", "azlk": "Moskvich",
+    "howo": "HOWO", "sinotruk": "HOWO", "sitrak": "SITRAK",
+    "voge": "Voge",
 }
 MODEL_ALIASES = {
     ("mercedes-benz", "c class"): "C-Class", ("mercedes-benz", "c-class"): "C-Class",

@@ -18,6 +18,7 @@
     "Ford",
     "GAZ",
     "Geely",
+    "HOWO",
     "Haval",
     "Honda",
     "Hongqi",
@@ -46,6 +47,7 @@
     "Porsche",
     "Ravon",
     "Renault",
+    "SITRAK",
     "Saipa",
     "Skoda",
     "Subaru",
@@ -170,12 +172,16 @@
     "Geely Monjaro",
     "Geely Preface",
     "Geely Tugella",
+    "HOWO A7",
+    "HOWO T5G",
+    "HOWO T7H",
     "Haval Dargo",
     "Haval F7",
     "Haval H2",
     "Haval H6",
     "Haval H9",
     "Haval Jolion",
+    "Haval Raptor",
     "Honda Accord",
     "Honda CR-V",
     "Honda Civic",
@@ -332,6 +338,7 @@
     "Renault Logan",
     "Renault Megane",
     "Renault Sandero",
+    "SITRAK C7H",
     "Saipa Pride",
     "Saipa Quick",
     "Saipa Tiba",
@@ -1968,6 +1975,13 @@
           "model": "Dargo",
           "body_type": "SUV"
         }
+      ],
+      "Raptor": [
+        {
+          "make": "Haval",
+          "model": "Raptor",
+          "body_type": "SUV"
+        }
       ]
     },
     "Geely": {
@@ -2858,6 +2872,38 @@
           "make": "Moskvich",
           "model": "6",
           "body_type": "Sedan"
+        }
+      ]
+    },
+    "HOWO": {
+      "T7H": [
+        {
+          "make": "HOWO",
+          "model": "T7H",
+          "body_type": "HeavyTruck"
+        }
+      ],
+      "T5G": [
+        {
+          "make": "HOWO",
+          "model": "T5G",
+          "body_type": "HeavyTruck"
+        }
+      ],
+      "A7": [
+        {
+          "make": "HOWO",
+          "model": "A7",
+          "body_type": "HeavyTruck"
+        }
+      ]
+    },
+    "SITRAK": {
+      "C7H": [
+        {
+          "make": "SITRAK",
+          "model": "C7H",
+          "body_type": "HeavyTruck"
         }
       ]
     }

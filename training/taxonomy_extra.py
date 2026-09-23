@@ -165,4 +165,9 @@ EXTRA_ENTRIES: list[tuple[str, str, str]] = [
     ("BMW", "iX", "SUV"),
     ("Chevrolet", "Onix", "Sedan"), ("Chevrolet", "Tracker", "SUV"),
     ("Toyota", "Corolla Cross", "SUV"),
+    # --- heavy trucks (radar-relevant) ---
+    ("HOWO", "T7H", "HeavyTruck"), ("HOWO", "T5G", "HeavyTruck"), ("HOWO", "A7", "HeavyTruck"),
+    ("SITRAK", "C7H", "HeavyTruck"),
+    # --- Haval expansion ---
+    ("Haval", "Raptor", "SUV"),
 ]
