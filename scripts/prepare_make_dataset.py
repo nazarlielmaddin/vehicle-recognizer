@@ -20,7 +20,7 @@ def main(raw: str = "data/raw", out: str = "data/processed/makes",
          min_side: int = 160, clean: bool = True):
     if clean and Path(out).exists():
         shutil.rmtree(Path(out))  # avoid stale classes from previous runs
-    roots = [Path(raw) / "turboaz", Path(raw) / "turboaz_pilot"]
+    roots = [Path("data/interim/crops"), Path(raw) / "turboaz", Path(raw) / "turboaz_pilot"]
     files: dict[str, list[Path]] = {}
     for root in roots:
         if not root.exists():
