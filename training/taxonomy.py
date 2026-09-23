@@ -33,6 +33,11 @@ MAKE_ALIASES = {
     "seres": "Seres", "aito": "Seres",
     "gac": "GAC", "trumpchi": "GAC",
     "cfmoto": "CFMoto", "cf moto": "CFMoto",
+    "gwm": "Great Wall", "great wall": "Great Wall",
+    "lynk": "Lynk&Co", "lynk&co": "Lynk&Co", "lynkco": "Lynk&Co",
+    "jmc": "JMC", "vgv": "VGV", "soueast": "Soueast",
+    "royal": "Royal Enfield", "royal enfield": "Royal Enfield",
+    "can-am": "Can-Am", "canam": "Can-Am", "benda": "Benda",
     "howo": "HOWO", "sinotruk": "HOWO", "sitrak": "SITRAK",
     "voge": "Voge",
 }

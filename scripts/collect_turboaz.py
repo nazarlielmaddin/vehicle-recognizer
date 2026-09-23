@@ -81,7 +81,8 @@ def parse_cards(html: str) -> list[tuple[str, str, str]]:
 NON_CAR_MAKES = {"voge", "honda moto", "yamaha", "kawasaki", "suzuki moto",
                  "bmw moto", "harley", "ducati", "ktm", "bajaj", "lifan moto",
                  " Loncin", "zongshen", "aprilia", "vespa", "sym", "kymco",
-                 "cfmoto", "cf moto"}
+                 "cfmoto", "cf moto", "royal enfield", "royal", "can-am",
+                 "canam", "benda", "harley-davidson", "indian moto"}
 
 def parse_make_model(title: str) -> tuple[str, str] | None:
     """Titles look like 'Volkswagen Passat' or 'Mercedes EQS 580 4MATIC SUV'.
@@ -93,11 +94,17 @@ def parse_make_model(title: str) -> tuple[str, str] | None:
     if parts[0].lower() in NON_CAR_MAKES or " ".join(parts[:2]).lower() in NON_CAR_MAKES:
         return None  # two-wheeler, out of scope
     # try 1-word then 2-word make (e.g. 'Land Rover', 'Iran Khodro', 'Mercedes-Benz')
+    # a 2-word candidate wins ONLY if it is a known make (alias table hit)
+    import re as _re
+    from training.taxonomy import MAKE_ALIASES as _ALIASES
     for n in (2, 1):
         cand = " ".join(parts[:n])
+        key = _re.sub(r"\s+", " ", _re.sub(r"[^a-z0-9]+", " ", cand.lower()).strip())
+        if n == 2 and key not in _ALIASES:
+            continue
         mk = normalize_make(cand)
         rest = " ".join(parts[n:])
-        if rest and mk.lower() != cand.lower().replace("  ", " ") or n == 1:
+        if rest:
             md = normalize_model(mk, rest.split(",")[0].strip())  # keep original case
             return mk, md
     return None

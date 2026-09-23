@@ -32,11 +32,19 @@ class TimmClassifier:
     def _load(self):
         import torch, timm
         if self._model is None:
+            ckpt = {}
+            if self.available:
+                ckpt = torch.load(self.weights, map_location="cpu")
+                # adopt the checkpoint's own class list (train-time order);
+                # taxonomy order may differ or be a superset
+                if isinstance(ckpt, dict) and ckpt.get("classes"):
+                    self.classes = list(ckpt["classes"])
+                if isinstance(ckpt, dict) and ckpt.get("backbone"):
+                    self.backbone = ckpt["backbone"]
             m = timm.create_model(self.backbone, pretrained=not self.available,
                                   num_classes=len(self.classes))
             if self.available:
-                sd = torch.load(self.weights, map_location="cpu")
-                m.load_state_dict(sd.get("state_dict", sd), strict=False)
+                m.load_state_dict(ckpt.get("state_dict", ckpt), strict=False)
             m.eval().to(self.device)
             self._model = m
         return self._model
