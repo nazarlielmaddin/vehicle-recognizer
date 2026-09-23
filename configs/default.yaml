@@ -60,6 +60,7 @@ unknown:
   min_nn_similarity: 0.45   # cosine similarity to nearest reference embedding
   max_nn_distance: 0.9
   poor_quality_abstain: true
+  same_make_model_min: 0.10  # hierarchical consistency: same-make model below this → model Unknown
   rare_class_threshold: 20  # fewer than N train samples → LIMITED-EVIDENCE flag
 
 api:

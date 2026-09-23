@@ -38,7 +38,9 @@ class TimmClassifier:
                 # adopt the checkpoint's own class list (train-time order);
                 # taxonomy order may differ or be a superset
                 if isinstance(ckpt, dict) and ckpt.get("classes"):
-                    self.classes = list(ckpt["classes"])
+                    # dataset dirs use underscores (Land_Rover); taxonomy uses
+                    # spaces (Land Rover) — normalize so make/model matching works
+                    self.classes = [c.replace("_", " ") for c in ckpt["classes"]]
                 if isinstance(ckpt, dict) and ckpt.get("backbone"):
                     self.backbone = ckpt["backbone"]
             m = timm.create_model(self.backbone, pretrained=not self.available,

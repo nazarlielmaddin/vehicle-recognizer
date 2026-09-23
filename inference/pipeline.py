@@ -204,8 +204,35 @@ class VehiclePipeline:
             fused = fuse_classifier_retrieval(
                 model_top, nn,
                 self.cfg["fusion"]["w_classifier"], self.cfg["fusion"]["w_retrieval"])
-            top1 = fused[0][1] if fused else 0.0
-            top2 = fused[1][1] if len(fused) > 1 else 0.0
+            fused_all = list(fused)
+            # HIERARCHICAL CONSISTENCY — fantasy pairs ("Changan NIO ES6",
+            # "Lada BYD Seagull") are a hard failure and are forbidden:
+            # the shown model must belong to the shown make, always.
+            make_name, make_conf = make_top[0]
+            hier_note = ""
+            same_min = float(self.cfg["unknown"].get("same_make_model_min", 0.10))
+            if make_name != "Unknown":
+                same = [x for x in fused
+                        if x[0] == make_name or x[0].startswith(make_name + " ")]
+                if same and same[0][1] >= same_min:
+                    fused = same + [x for x in fused if x not in same]
+                else:
+                    dropped = fused[0][0] if fused else "none"
+                    if same:
+                        hier_note = (f"best {make_name} model {same[0][0]} too weak "
+                                     f"({same[0][1]:.2f}) — model unknown")
+                    else:
+                        hier_note = (f"model {dropped} excluded (not {make_name}) "
+                                     f"— model unknown")
+                    fused = []
+            if fused:
+                top1 = fused[0][1]
+                top2 = fused[1][1] if len(fused) > 1 else 0.0
+                model_label = fused[0][0]
+            else:
+                top1 = make_conf if make_name != "Unknown" else 0.0
+                top2 = 0.0
+                model_label = "Unknown"
             ent = entropy(model_p) if (self.model_clf.available or zs_used) else 99.0
             u = self.cfg["unknown"]
             abstain, reasons = decide_unknown(
@@ -213,7 +240,12 @@ class VehiclePipeline:
                 u["min_confidence"], u["min_margin"], u["max_entropy"],
                 u["min_nn_similarity"], u["poor_quality_abstain"])
             trained = self.model_clf.available and self.make_clf.available
-            if abstain:
+            if not fused and make_name != "Unknown" and (
+                    self.make_clf.available or make_conf >= 0.4):
+                # make known, model unknown — review, never a fantasy pair
+                status = "UNCERTAIN"
+                reasons = [hier_note + " (confidence = make-level)"] + reasons
+            elif abstain:
                 status = "UNKNOWN"
             elif not trained and zs_used:
                 # zero-shot evidence only → real guess, but never CONFIDENT
@@ -230,9 +262,10 @@ class VehiclePipeline:
             reasons = reasons_badge + reasons
             if self._last_gate_note:
                 reasons = [self._last_gate_note] + reasons
-            # alternatives: same-make confusions first (most likely look-alikes)
+            # alternatives: same-make confusions first (most likely look-alikes);
+            # drawn from the pre-constraint list so review keeps full context
             mk_name = make_top[0][0]
-            alt_pool = list(fused[1:6])
+            alt_pool = list(fused_all[1:6] if fused else fused_all[:5])
             same = [x for x in alt_pool if x[0] == mk_name or x[0].startswith(mk_name + " ")]
             alt_ordered = (same + [x for x in alt_pool if x not in same])[:3]
             vehicles.append({
@@ -241,7 +274,7 @@ class VehiclePipeline:
                                     else ("trained-make+zero-shot" if self.make_clf.available
                                           else ("zero-shot-clip" if zs_used else "none"))),
                 "make": make_top[0][0], "make_conf": round(float(make_top[0][1]), 4),
-                "model": fused[0][0] if fused else "Unknown",
+                "model": model_label,
                 "confidence": round(float(top1), 4),
                 "body_type": body_top[0][0], "body_conf": round(float(body_top[0][1]), 4),
                 "orientation": view_top[0][0],
