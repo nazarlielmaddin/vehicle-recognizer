@@ -24,16 +24,21 @@ def build_loaders(root: str, backbone: str, batch: int, img: int):
     tr = datasets.ImageFolder(f"{root}/train", tf_tr)
     va = datasets.ImageFolder(f"{root}/val", tf_va)
     from training.common import balanced_sampler
-    return (DataLoader(tr, batch, sampler=balanced_sampler(tr.targets), num_workers=4),
-            DataLoader(va, batch * 2, num_workers=4), tr.classes)
+    # num_workers=0: Windows spawn overhead dominates on small datasets;
+    # images are tiny JPEGs, in-process loading is faster here.
+    return (DataLoader(tr, batch, sampler=balanced_sampler(tr.targets), num_workers=0),
+            DataLoader(va, batch * 2, num_workers=0), tr.classes)
 
 @app.command()
 def main(data: str = "data/processed/crops",
          backbone: str = "convnext_tiny.fb_in1k",
          epochs: int = 60, batch: int = 64, lr: float = 3e-4,
+         img_size: int = 224,
          out: str = "models/model/best.pt"):
+    torch.set_num_threads(4)
+    torch.set_num_interop_threads(2)
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    tr_ld, va_ld, classes = build_loaders(data, backbone, batch, 224)
+    tr_ld, va_ld, classes = build_loaders(data, backbone, batch, img_size)
     m = timm.create_model(backbone, pretrained=True, num_classes=len(classes)).to(device)
     opt = torch.optim.AdamW([{"params": m.get_classifier().parameters(), "lr": lr},
                              {"params": [p for n, p in m.named_parameters()
@@ -59,7 +64,7 @@ def main(data: str = "data/processed/crops",
                 p = m(x.to(device)).argmax(1).cpu()
                 correct += (p == y).sum().item(); tot += len(y)
         acc = correct / max(tot, 1)
-        print(f"epoch {ep+1}/{epochs} val_acc={acc:.4f}")
+        print(f"epoch {ep+1}/{epochs} val_acc={acc:.4f}", flush=True)
         if acc > best:
             best = acc
             torch.save({"state_dict": m.state_dict(), "classes": classes,
