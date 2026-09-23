@@ -16,6 +16,7 @@
     "FAW",
     "Fiat",
     "Ford",
+    "GAC",
     "GAZ",
     "Geely",
     "HOWO",
@@ -49,6 +50,7 @@
     "Renault",
     "SITRAK",
     "Saipa",
+    "Seres",
     "Skoda",
     "Subaru",
     "Suzuki",
@@ -99,6 +101,7 @@
     "BYD Tang",
     "BYD Yuan",
     "Changan Alsvin",
+    "Changan Alsvin V7",
     "Changan Benben",
     "Changan CS15",
     "Changan CS35",
@@ -109,9 +112,13 @@
     "Changan Eado",
     "Changan Hunter",
     "Changan Lumin",
+    "Changan Nevo A05",
+    "Changan Oshan X5",
+    "Changan Qiyuan Q05",
     "Changan UNI-K",
     "Changan UNI-T",
     "Changan UNI-V",
+    "Changan UNI-Z",
     "Chery Arrizo 5",
     "Chery Bonus",
     "Chery Tiggo 2",
@@ -163,6 +170,11 @@
     "Ford Mustang",
     "Ford Ranger",
     "Ford Transit",
+    "GAC Emkoo",
+    "GAC Empow",
+    "GAC GS3",
+    "GAC GS4",
+    "GAC GS8",
     "GAZ Gazelle",
     "GAZ Sobol",
     "GAZ Volga",
@@ -342,6 +354,9 @@
     "Saipa Pride",
     "Saipa Quick",
     "Saipa Tiba",
+    "Seres M5",
+    "Seres M7",
+    "Seres M9",
     "Skoda Fabia",
     "Skoda Karoq",
     "Skoda Kodiaq",
@@ -2432,6 +2447,101 @@
           "make": "Changan",
           "model": "Hunter",
           "body_type": "Pickup"
+        }
+      ],
+      "UNI-Z": [
+        {
+          "make": "Changan",
+          "model": "UNI-Z",
+          "body_type": "SUV"
+        }
+      ],
+      "Nevo A05": [
+        {
+          "make": "Changan",
+          "model": "Nevo A05",
+          "body_type": "Sedan"
+        }
+      ],
+      "Oshan X5": [
+        {
+          "make": "Changan",
+          "model": "Oshan X5",
+          "body_type": "SUV"
+        }
+      ],
+      "Qiyuan Q05": [
+        {
+          "make": "Changan",
+          "model": "Qiyuan Q05",
+          "body_type": "SUV"
+        }
+      ],
+      "Alsvin V7": [
+        {
+          "make": "Changan",
+          "model": "Alsvin V7",
+          "body_type": "Sedan"
+        }
+      ]
+    },
+    "Seres": {
+      "M5": [
+        {
+          "make": "Seres",
+          "model": "M5",
+          "body_type": "SUV"
+        }
+      ],
+      "M7": [
+        {
+          "make": "Seres",
+          "model": "M7",
+          "body_type": "SUV"
+        }
+      ],
+      "M9": [
+        {
+          "make": "Seres",
+          "model": "M9",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "GAC": {
+      "GS3": [
+        {
+          "make": "GAC",
+          "model": "GS3",
+          "body_type": "SUV"
+        }
+      ],
+      "GS4": [
+        {
+          "make": "GAC",
+          "model": "GS4",
+          "body_type": "SUV"
+        }
+      ],
+      "GS8": [
+        {
+          "make": "GAC",
+          "model": "GS8",
+          "body_type": "SUV"
+        }
+      ],
+      "Empow": [
+        {
+          "make": "GAC",
+          "model": "Empow",
+          "body_type": "Sedan"
+        }
+      ],
+      "Emkoo": [
+        {
+          "make": "GAC",
+          "model": "Emkoo",
+          "body_type": "SUV"
         }
       ]
     },

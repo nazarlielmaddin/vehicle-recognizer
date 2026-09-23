@@ -80,7 +80,8 @@ def parse_cards(html: str) -> list[tuple[str, str, str]]:
 
 NON_CAR_MAKES = {"voge", "honda moto", "yamaha", "kawasaki", "suzuki moto",
                  "bmw moto", "harley", "ducati", "ktm", "bajaj", "lifan moto",
-                 " Loncin", "zongshen", "aprilia", "vespa", "sym", "kymco"}
+                 " Loncin", "zongshen", "aprilia", "vespa", "sym", "kymco",
+                 "cfmoto", "cf moto"}
 
 def parse_make_model(title: str) -> tuple[str, str] | None:
     """Titles look like 'Volkswagen Passat' or 'Mercedes EQS 580 4MATIC SUV'.

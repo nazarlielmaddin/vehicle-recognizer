@@ -1,4 +1,23 @@
 {
-  "counts": {},
+  "counts": {
+    "Lada": 4,
+    "Seres": 1,
+    "Volkswagen": 1,
+    "Hyundai": 5,
+    "Changan": 5,
+    "Cfmoto": 2,
+    "Mercedes-Benz": 5,
+    "Toyota": 5,
+    "Gac": 2,
+    "BMW": 5,
+    "Ford": 4,
+    "BYD": 2,
+    "BAIC": 4,
+    "Nissan": 1,
+    "Dongfeng": 1,
+    "Audi": 1,
+    "Kia": 1,
+    "Chevrolet": 1
+  },
   "date": "2026-09-23"
 }

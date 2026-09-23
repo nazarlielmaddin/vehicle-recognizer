@@ -128,6 +128,13 @@ EXTRA_ENTRIES: list[tuple[str, str, str]] = [
     ("Changan", "CS75", "SUV"), ("Changan", "CS85", "SUV"), ("Changan", "CS95", "SUV"),
     ("Changan", "UNI-T", "SUV"), ("Changan", "UNI-K", "SUV"), ("Changan", "UNI-V", "Sedan"),
     ("Changan", "Hunter", "Pickup"),
+    ("Changan", "UNI-Z", "SUV"), ("Changan", "Nevo A05", "Sedan"),
+    ("Changan", "Oshan X5", "SUV"), ("Changan", "Qiyuan Q05", "SUV"),
+    ("Changan", "Alsvin V7", "Sedan"),
+    # --- Seres / GAC (discovered from turbo.az) ---
+    ("Seres", "M5", "SUV"), ("Seres", "M7", "SUV"), ("Seres", "M9", "SUV"),
+    ("GAC", "GS3", "SUV"), ("GAC", "GS4", "SUV"), ("GAC", "GS8", "SUV"),
+    ("GAC", "Empow", "Sedan"), ("GAC", "Emkoo", "SUV"),
     # --- BYD ---
     ("BYD", "Song", "SUV"), ("BYD", "Tang", "SUV"), ("BYD", "Han", "Sedan"),
     ("BYD", "Qin", "Sedan"), ("BYD", "Atto 3", "SUV"), ("BYD", "Dolphin", "Hatchback"),
