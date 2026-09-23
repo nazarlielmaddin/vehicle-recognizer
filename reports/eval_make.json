@@ -1,0 +1,136 @@
+{
+  "n": 116,
+  "classes": 37,
+  "top1": 0.4138,
+  "top3": 0.5431,
+  "top5": 0.6207,
+  "macro_f1": 0.2326,
+  "confusion_top": [
+    {
+      "true": "Mercedes-Benz",
+      "pred": "Hyundai",
+      "count": 3
+    },
+    {
+      "true": "BMW",
+      "pred": "Chevrolet",
+      "count": 2
+    },
+    {
+      "true": "BMW",
+      "pred": "Mercedes-Benz",
+      "count": 2
+    },
+    {
+      "true": "Chevrolet",
+      "pred": "Hyundai",
+      "count": 2
+    },
+    {
+      "true": "Hyundai",
+      "pred": "Nissan",
+      "count": 2
+    },
+    {
+      "true": "Kia",
+      "pred": "Chevrolet",
+      "count": 2
+    },
+    {
+      "true": "Toyota",
+      "pred": "Changan",
+      "count": 2
+    },
+    {
+      "true": "Toyota",
+      "pred": "Mercedes-Benz",
+      "count": 2
+    },
+    {
+      "true": "Audi",
+      "pred": "Land_Rover",
+      "count": 1
+    },
+    {
+      "true": "BAIC",
+      "pred": "Changan",
+      "count": 1
+    },
+    {
+      "true": "BMW",
+      "pred": "Volkswagen",
+      "count": 1
+    },
+    {
+      "true": "BYD",
+      "pred": "BAIC",
+      "count": 1
+    },
+    {
+      "true": "Changan",
+      "pred": "Nissan",
+      "count": 1
+    },
+    {
+      "true": "Chery",
+      "pred": "Mercedes-Benz",
+      "count": 1
+    },
+    {
+      "true": "Chevrolet",
+      "pred": "Nissan",
+      "count": 1
+    },
+    {
+      "true": "DFSK",
+      "pred": "Jeep",
+      "count": 1
+    },
+    {
+      "true": "Ford",
+      "pred": "Chevrolet",
+      "count": 1
+    },
+    {
+      "true": "Ford",
+      "pred": "Kia",
+      "count": 1
+    },
+    {
+      "true": "Ford",
+      "pred": "Lexus",
+      "count": 1
+    },
+    {
+      "true": "GAC",
+      "pred": "Mercedes-Benz",
+      "count": 1
+    },
+    {
+      "true": "Geely",
+      "pred": "Changan",
+      "count": 1
+    },
+    {
+      "true": "Haval",
+      "pred": "Kia",
+      "count": 1
+    },
+    {
+      "true": "Honda",
+      "pred": "Hyundai",
+      "count": 1
+    },
+    {
+      "true": "Hyundai",
+      "pred": "Ford",
+      "count": 1
+    },
+    {
+      "true": "Hyundai",
+      "pred": "Kia",
+      "count": 1
+    }
+  ],
+  "weights": "models/make/best.pt"
+}
