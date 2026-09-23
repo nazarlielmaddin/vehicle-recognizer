@@ -43,27 +43,71 @@ def main() -> None:
 
     tr = scan_dir(ROOT / "data/processed/makes/train", depth=1)
     va = scan_dir(ROOT / "data/processed/makes/val", depth=1)
+    te = scan_dir(ROOT / "data/processed/makes/test", depth=1)
     n_tr = sum(len(v) for v in tr.values())
     n_va = sum(len(v) for v in va.values())
+    n_te = sum(len(v) for v in te.values())
     print("\n=== TRAIN ===")
     print(f"Classes: {len(tr)}")
     print(f"Images: {n_tr}")
     print("\n=== VALIDATION ===")
     print(f"Classes: {len(va)}")
     print(f"Images: {n_va}")
+    print("\n=== TEST ===")
+    print(f"Classes: {len(te)}")
+    print(f"Images: {n_te}")
+    print("\n=== CLASS BALANCE (train) ===")
+    import statistics
+    cnts = sorted((len(v) for v in tr.values()))
+    if cnts:
+        print(f"Min: {cnts[0]}  Median: {statistics.median(cnts)}  Max: {cnts[-1]}")
+    print("Per-class (class total train val test source):")
+    for mk in sorted(set(tr) | set(va) | set(te)):
+        tot = len(tr.get(mk, [])) + len(va.get(mk, [])) + len(te.get(mk, []))
+        print(f"  {mk}: total={tot} train={len(tr.get(mk, []))} "
+              f"val={len(va.get(mk, []))} test={len(te.get(mk, []))} source=turboaz")
     print("\n=== INTEGRITY ===")
-    str_, sva = set(tr), set(va)
-    print(f"Class overlap: {len(str_ & sva)}/{len(str_ | sva)}")
+    str_, sva, ste = set(tr), set(va), set(te)
+    print(f"Class overlap: {len(str_ & sva & ste)}/{len(str_ | sva | ste)}")
     print(f"Missing train classes (val-only): {sorted(sva - str_)}")
     print(f"Missing val classes (train-only): {sorted(str_ - sva)}")
+    print(f"Missing test classes: {sorted(str_ - ste)}")
     leak = 0
     for mk in str_ & sva:
         dup = set(tr[mk]) & set(va[mk])
         leak += len(dup)
         if dup:
             print(f"  LEAK {mk}: {sorted(dup)[:5]}")
+    for mk in str_ & ste:
+        dup = set(tr[mk]) & set(te[mk])
+        leak += len(dup)
+        if dup:
+            print(f"  LEAK-T {mk}: {sorted(dup)[:5]}")
     print(f"Leakage: {leak}")
-    print(f"Duplicate images: {leak} (same stem both splits)")
+    print(f"Duplicate images: {leak} (same stem across splits)")
+    print("\n=== MODELS ===")
+
+    def pairsplit(s):
+        root = ROOT / f"data/processed/models/{s}"
+        out = {}
+        if root.is_dir():
+            for mkd in sorted(root.iterdir()):
+                if not mkd.is_dir():
+                    continue
+                for mdd in sorted(mkd.iterdir()):
+                    if mdd.is_dir():
+                        out[f"{mkd.name} {mdd.name}"] = len(list(mdd.glob("*.jpg")))
+        return out
+
+    ptr, pva, pte = pairsplit("train"), pairsplit("val"), pairsplit("test")
+    ctr = sum(ptr.values())
+    print(f"Pairs train/val/test: {len(ptr)}/{len(pva)}/{len(pte)} "
+          f"images {ctr}/{sum(pva.values())}/{sum(pte.values())}")
+    allp = set(ptr) | set(pva) | set(pte)
+    print(f"Pair overlap: {len(set(ptr) & set(pva) & set(pte))}/{len(allp)}")
+    cn = sorted(ptr.values())
+    if cn:
+        print(f"Balance min/median/max: {cn[0]}/{statistics.median(cn)}/{cn[-1]}")
     bad = 0
     for d in (ROOT / "data/processed/makes/train", ROOT / "data/processed/makes/val"):
         for jp in d.rglob("*.jpg"):

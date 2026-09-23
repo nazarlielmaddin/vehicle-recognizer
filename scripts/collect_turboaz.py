@@ -87,9 +87,14 @@ NON_CAR_MAKES = {"voge", "honda moto", "yamaha", "kawasaki", "suzuki moto",
 def parse_make_model(title: str) -> tuple[str, str] | None:
     """Titles look like 'Volkswagen Passat' or 'Mercedes EQS 580 4MATIC SUV'.
     Returns None for motorcycles / unparseable titles."""
+    import html as _html
+    import re as _re2
+    title = _html.unescape(title)  # turbo.az emits &amp; &quot; etc.
+    title = _re2.sub(r"\([^)]*\)", "", title)  # drop "(Great Wall Motor)"-style notes
     first = title.split(",")[0].strip()
-    parts = first.split()
+    parts = [p for p in first.split() if p != "&"]
     if len(parts) < 2:
+        # single token like "900" after cleanup is a trim, not a vehicle
         return None
     if parts[0].lower() in NON_CAR_MAKES or " ".join(parts[:2]).lower() in NON_CAR_MAKES:
         return None  # two-wheeler, out of scope

@@ -18,6 +18,7 @@ from PIL import Image
 app = typer.Typer()
 MOTO_DIRS = {"Royal", "Can-Am", "Canam", "Benda", "Cfmoto", "Voge", "Yadea"}
 VAL_FRAC = 0.15
+TEST_FRAC = 0.15
 
 
 def _verify(jp: Path, min_side: int) -> bool:
@@ -32,7 +33,7 @@ def _verify(jp: Path, min_side: int) -> bool:
 
 @app.command()
 def main(out: str = "data/processed/makes", rare_out: str = "data/processed/rare",
-         min_side: int = 100, val_frac: float = VAL_FRAC):
+         min_side: int = 100, val_frac: float = VAL_FRAC, test_frac: float = TEST_FRAC):
     crops = Path("data/interim/crops")
     by_make: dict[str, dict[str, Path]] = {}
     bad = 0
@@ -50,16 +51,17 @@ def main(out: str = "data/processed/makes", rare_out: str = "data/processed/rare
         # one file per listing id (filter already dedups; keep first deterministically)
         by_make.setdefault(mk, {}).setdefault(lid, jp)
     out_p, rare_p = Path(out), Path(rare_out)
-    for d in (out_p / "train", out_p / "val", rare_p):
+    for d in (out_p / "train", out_p / "val", out_p / "test", rare_p):
         if d.exists():
             shutil.rmtree(d)
     mapping: list[str] = []
     rare: dict[str, int] = {}
-    n_tr = n_va = 0
+    n_tr = n_va = n_te = 0
     for mk in sorted(by_make):
         lids = sorted(by_make[mk])
-        if len(lids) < 2:
-            # QAYDA 5: no fake validation — holdout for future collection rounds
+        if len(lids) < 3:
+            # QAYDA 5 + 3-way split integrity: <3 images cannot cover
+            # train+val+test -> rare holdout for future collection rounds
             dd = rare_p / mk
             dd.mkdir(parents=True, exist_ok=True)
             for lid in lids:
@@ -68,7 +70,10 @@ def main(out: str = "data/processed/makes", rare_out: str = "data/processed/rare
             continue
         mapping.append(mk)
         n_val = max(1, round(len(lids) * val_frac))
-        val_ids, tr_ids = set(lids[:n_val]), set(lids[n_val:])
+        n_tst = max(1, round(len(lids) * test_frac)) if len(lids) >= 3 else 0
+        val_ids = set(lids[:n_val])
+        test_ids = set(lids[n_val:n_val + n_tst])
+        tr_ids = [l for l in lids if l not in val_ids and l not in test_ids]
         for lid in tr_ids:
             dd = out_p / "train" / mk
             dd.mkdir(parents=True, exist_ok=True)
@@ -79,11 +84,16 @@ def main(out: str = "data/processed/makes", rare_out: str = "data/processed/rare
             dd.mkdir(parents=True, exist_ok=True)
             shutil.copy2(by_make[mk][lid], dd / f"{lid}.jpg")
             n_va += 1
+        for lid in test_ids:
+            dd = out_p / "test" / mk
+            dd.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(by_make[mk][lid], dd / f"{lid}.jpg")
+            n_te += 1
     (Path(out).parent / "class_mapping.json").write_text(
-        json.dumps({"classes": mapping, "val_frac": val_frac,
+        json.dumps({"classes": mapping, "val_frac": val_frac, "test_frac": test_frac,
                     "rule": "stratified-within-class, min-2-images"},
                    ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"train={n_tr} val={n_va} classes={len(mapping)}", flush=True)
+    print(f"train={n_tr} val={n_va} test={n_te} classes={len(mapping)}", flush=True)
     print(f"rare holdout makes ({len(rare)}): {sorted(rare)}", flush=True)
     print(f"invalid skipped: {bad}", flush=True)
     print(f"mapping -> data/processed/class_mapping.json", flush=True)

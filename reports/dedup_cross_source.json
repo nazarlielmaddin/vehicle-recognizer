@@ -1,0 +1,10 @@
+{
+  "files": 773,
+  "pools": [
+    "crops"
+  ],
+  "exact_duplicates": 0,
+  "near_duplicates": 1,
+  "unique": 772,
+  "threshold": 6
+}

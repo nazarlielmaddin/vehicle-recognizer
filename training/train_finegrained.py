@@ -136,6 +136,12 @@ def _preflight(data: str) -> list[str]:
         print(f"  train-only: {sorted(set(tr_classes) - set(va_classes))}", flush=True)
         print(f"  val-only: {sorted(set(va_classes) - set(tr_classes))}", flush=True)
         raise SystemExit(1)
+    te_dir = root / "test"
+    if te_dir.is_dir():
+        te_classes = sorted(p.name for p in te_dir.iterdir() if p.is_dir())
+        if set(te_classes) != set(tr_classes):
+            print("ERROR: Train/test class mismatch.\nTraining aborted.", flush=True)
+            raise SystemExit(1)
     mapping_p = root.parent / "class_mapping.json"
     if mapping_p.exists():
         import json
