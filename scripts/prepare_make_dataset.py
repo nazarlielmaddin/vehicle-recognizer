@@ -17,7 +17,9 @@ MOTO_DIRS = {"Royal", "Can-Am", "Canam", "Benda", "Cfmoto", "Voge"}
 
 @app.command()
 def main(raw: str = "data/raw", out: str = "data/processed/makes",
-         min_side: int = 160):
+         min_side: int = 160, clean: bool = True):
+    if clean and Path(out).exists():
+        shutil.rmtree(Path(out))  # avoid stale classes from previous runs
     roots = [Path(raw) / "turboaz", Path(raw) / "turboaz_pilot"]
     files: dict[str, list[Path]] = {}
     for root in roots:

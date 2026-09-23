@@ -237,7 +237,9 @@ class VehiclePipeline:
             alt_ordered = (same + [x for x in alt_pool if x not in same])[:3]
             vehicles.append({
                 "id": i + 1, "box": c["box"], "det_conf": round(float(c["conf_det"]), 3),
-                "evidence_source": "trained" if trained else ("zero-shot-clip" if zs_used else "none"),
+                "evidence_source": ("trained" if trained
+                                    else ("trained-make+zero-shot" if self.make_clf.available
+                                          else ("zero-shot-clip" if zs_used else "none"))),
                 "make": make_top[0][0], "make_conf": round(float(make_top[0][1]), 4),
                 "model": fused[0][0] if fused else "Unknown",
                 "confidence": round(float(top1), 4),
