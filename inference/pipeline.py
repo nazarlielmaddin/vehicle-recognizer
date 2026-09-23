@@ -14,6 +14,7 @@ from .detector import VehicleDetector
 from .crops import extract_crops, letterbox
 from .classifiers import TimmClassifier
 from .retrieval import EmbeddingExtractor, EmbeddingStore
+from .vmmr import VMMRExpert
 from .fusion import fuse_classifier_retrieval, decide_unknown, entropy, softmax_with_temperature
 from .zeroshot import ClipZeroShot, VIEW_PROMPTS, BODY_PROMPTS
 
@@ -67,6 +68,7 @@ class VehiclePipeline:
         self.T = float(self.cfg["calibration"].get("temperature", 1.0))
         self._zs = None  # lazy zero-shot fallback, built on first need
         self._last_gate_note = ""
+        self.vmmr = VMMRExpert()  # 8949-class expert file; lazy-loads on first use
 
     @property
     def zero_shot(self) -> ClipZeroShot:
@@ -214,6 +216,50 @@ class VehiclePipeline:
                 model_top, model_p, ok = self._zs_head(
                     c["full"], self.model_clf.classes, "model", k=15, feat=zfeat)
                 zs_used = zs_used or ok
+            # VMMR EXPERT (8949 Make/Model/Year classes, local file).
+            # Strong on Western/JP makes incl. year; knows no Chinese brands.
+            vmmr_top: list = []
+            vmmr_year: str = ""
+            vmmr_note = ""
+            if self.vmmr.available:
+                try:
+                    vmmr_top = self.vmmr.predict(c["full"], self.full_makes, k=5)
+                    if vmmr_top:
+                        vmmr_year = vmmr_top[0][2]
+                except Exception as e:
+                    vmmr_note = f"vmmr-expert failed: {str(e)[:80]}"
+            if vmmr_top:
+                vm, vmd, _yr, vp = vmmr_top[0]
+                # make: adopt when ours is weak and VMMR is confident on a
+                # make outside our trained set (e.g. Subaru); agree-boost else
+                if (vp >= 0.5 and vm not in self.make_clf.classes
+                        and make_top[0][1] < 0.4 and make_top[0][0] != "Unknown"):
+                    make_top = [(vm, vp)] + [x for x in make_top if x[0] != vm][:4]
+                    vmmr_note = f"vmmr-expert adopts {vm} ({vp:.2f})"
+                    zs_used = True
+                elif vm == make_top[0][0] and vp >= 0.3:
+                    make_top = [(vm, min(0.95, make_top[0][1] + 0.15))] + \
+                        [x for x in make_top[1:4]]
+                    vmmr_note = f"vmmr-expert agrees {vm}"
+                # model: map to taxonomy, inject pre-gate (gate still filters)
+                if vp >= 0.15:
+                    try:
+                        from training.taxonomy import match_taxonomy_model
+                        import json as _js
+                        taxm = getattr(self, "_tax_detail", None)
+                        if taxm is None:
+                            taxm = _js.loads(open(self.cfg["paths"]["taxonomy"],
+                                                  encoding="utf-8").read()).get("detail", {})
+                            self._tax_detail = taxm
+                        hit = match_taxonomy_model(vm, vmd, taxm)
+                        if hit:
+                            label = f"{vm} {hit}" if not hit.startswith(vm) else hit
+                            if label not in [x[0] for x in model_top]:
+                                model_top = model_top + [(label, 0.5 * vp)]
+                                vmmr_note = (vmmr_note + "; " if vmmr_note else "") + \
+                                    f"vmmr model {label}"
+                    except Exception:
+                        pass
             # hard gate BEFORE fusion: incompatible bodies can never win
             model_top = self._gate_models(model_top, c.get("label_det", "car"), k=5)
             if self.body_clf.available:
@@ -302,6 +348,8 @@ class VehiclePipeline:
                            f"top={make_top[0][0]} {make_top[0][1]:.2f})"] + reasons
             if self._last_gate_note:
                 reasons = [self._last_gate_note] + reasons
+            if vmmr_note:
+                reasons = [vmmr_note] + reasons
             # alternatives: same-make confusions first (most likely look-alikes);
             # drawn from the pre-constraint list so review keeps full context
             mk_name = make_top[0][0]
@@ -316,6 +364,7 @@ class VehiclePipeline:
                 "make": make_top[0][0], "make_conf": round(float(make_top[0][1]), 4),
                 "model": model_label,
                 "confidence": round(float(top1), 4),
+                "year": vmmr_year or None,
                 "body_type": body_top[0][0], "body_conf": round(float(body_top[0][1]), 4),
                 "orientation": view_top[0][0],
                 "status": status,

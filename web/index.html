@@ -78,7 +78,7 @@ function showOne(r){if(!r.vehicles||!r.vehicles.length)return `<div class="card"
 return r.vehicles.map(v=>`<div class="card"><h3>Avtomobil #${v.id} — ${v.make} ${v.model}</h3>
 <span class="badge ${cls(v.status)}">${STATUS[v.status]||v.status}</span>
 <div class="btype">🚐 Ban növü: <b>${BODY[v.body_type]||v.body_type}</b> (${(v.body_conf*100).toFixed(1)}%)</div>
-<div>Marka: <b>${v.make}</b> (${(v.make_conf*100).toFixed(1)}%) · Model: <b>${v.model}</b></div>
+<div>Marka: <b>${v.make}</b> (${(v.make_conf*100).toFixed(1)}%) · Model: <b>${v.model}</b>${v.year?` · İl: <b>${v.year}</b>`:''}</div>
 <div>Rakurs: <b>${VIEW[v.orientation]||v.orientation}</b></div>
 <div>Əminlik: <b>${(v.confidence*100).toFixed(1)}%</b> · det ${(v.det_conf*100).toFixed(0)}% · NN-oxşarlıq ${v.nn_similarity}</div>
 <div><small>Mənbə: ${SRC[v.evidence_source]||v.evidence_source||'məlum deyil'}</small></div>
