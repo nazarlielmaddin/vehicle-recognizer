@@ -38,6 +38,12 @@ MAKE_ALIASES = {
     "jmc": "JMC", "vgv": "VGV", "soueast": "Soueast",
     "royal": "Royal Enfield", "royal enfield": "Royal Enfield",
     "can-am": "Can-Am", "canam": "Can-Am", "benda": "Benda",
+    "jaecoo": "Jaecoo", "voyah": "Voyah", "rox": "Rox",
+    "seat": "Seat", "mini": "Mini", "gmc": "GMC",
+    "cadillac": "Cadillac", "maserati": "Maserati", "ferrari": "Ferrari",
+    "bentley": "Bentley", "man": "MAN", "kamaz": "KamAZ", "shacman": "Shacman",
+    "radar": "Radar", "mercedes-maybach": "Mercedes-Benz", "maybach": "Mercedes-Benz",
+    "yadea": "Yadea",
     "howo": "HOWO", "sinotruk": "HOWO", "sitrak": "SITRAK",
     "voge": "Voge",
 }

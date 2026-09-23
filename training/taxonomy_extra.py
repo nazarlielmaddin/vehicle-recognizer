@@ -177,4 +177,20 @@ EXTRA_ENTRIES: list[tuple[str, str, str]] = [
     ("SITRAK", "C7H", "HeavyTruck"),
     # --- Haval expansion ---
     ("Haval", "Raptor", "SUV"),
+    # --- newly discovered on turbo.az ---
+    ("Jaecoo", "J7", "SUV"), ("Jaecoo", "J8", "SUV"),
+    ("Voyah", "Free", "SUV"), ("Voyah", "Dreamer", "MPV"),
+    ("Rox", "01", "SUV"),
+    ("Seat", "Leon", "Hatchback"), ("Seat", "Ibiza", "Hatchback"), ("Seat", "Ateca", "SUV"),
+    ("Mini", "Cooper", "Hatchback"), ("Mini", "Countryman", "SUV"),
+    ("GMC", "Yukon", "SUV"),
+    ("Cadillac", "Escalade", "SUV"), ("Cadillac", "XT5", "SUV"),
+    ("Maserati", "Ghibli", "Sedan"), ("Maserati", "Levante", "SUV"), ("Maserati", "Grecale", "SUV"),
+    ("Ferrari", "Roma", "Coupe"), ("Ferrari", "296", "Coupe"),
+    ("Bentley", "Bentayga", "SUV"), ("Bentley", "Continental", "Coupe"),
+    ("MAN", "TGS", "HeavyTruck"), ("MAN", "TGX", "HeavyTruck"),
+    ("KamAZ", "5490", "HeavyTruck"), ("KamAZ", "6520", "HeavyTruck"),
+    ("Shacman", "X3000", "HeavyTruck"),
+    ("Radar", "RD6", "Pickup"),
+    ("Mercedes-Benz", "Maybach S-Class", "Sedan"),
 ]

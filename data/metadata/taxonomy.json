@@ -4,6 +4,8 @@
     "BAIC",
     "BMW",
     "BYD",
+    "Bentley",
+    "Cadillac",
     "Changan",
     "Chery",
     "Chevrolet",
@@ -14,10 +16,12 @@
     "Dongfeng",
     "Exeed",
     "FAW",
+    "Ferrari",
     "Fiat",
     "Ford",
     "GAC",
     "GAZ",
+    "GMC",
     "Geely",
     "HOWO",
     "Haval",
@@ -27,17 +31,22 @@
     "Infiniti",
     "Iran Khodro",
     "JAC",
+    "Jaecoo",
     "Jeep",
     "Jetour",
+    "KamAZ",
     "Kia",
     "Lada",
     "Land Rover",
     "Lexus",
     "Li Auto",
     "Lifan",
+    "MAN",
     "MG",
+    "Maserati",
     "Mazda",
     "Mercedes-Benz",
+    "Mini",
     "Mitsubishi",
     "Moskvich",
     "NIO",
@@ -46,11 +55,15 @@
     "Opel",
     "Peugeot",
     "Porsche",
+    "Radar",
     "Ravon",
     "Renault",
+    "Rox",
     "SITRAK",
     "Saipa",
+    "Seat",
     "Seres",
+    "Shacman",
     "Skoda",
     "Subaru",
     "Suzuki",
@@ -59,6 +72,7 @@
     "UAZ",
     "Volkswagen",
     "Volvo",
+    "Voyah",
     "Wuling",
     "XPeng",
     "ZAZ",
@@ -100,6 +114,10 @@
     "BYD Song",
     "BYD Tang",
     "BYD Yuan",
+    "Bentley Bentayga",
+    "Bentley Continental",
+    "Cadillac Escalade",
+    "Cadillac XT5",
     "Changan Alsvin",
     "Changan Alsvin V7",
     "Changan Benben",
@@ -158,6 +176,8 @@
     "FAW B70",
     "FAW T99",
     "FAW X40",
+    "Ferrari 296",
+    "Ferrari Roma",
     "Fiat 500",
     "Fiat Doblo",
     "Fiat Egea",
@@ -178,6 +198,7 @@
     "GAZ Gazelle",
     "GAZ Sobol",
     "GAZ Volga",
+    "GMC Yukon",
     "Geely Atlas",
     "Geely Coolray",
     "Geely Emgrand",
@@ -224,6 +245,8 @@
     "JAC S3",
     "JAC S5",
     "JAC T8",
+    "Jaecoo J7",
+    "Jaecoo J8",
     "Jeep Cherokee",
     "Jeep Compass",
     "Jeep Grand Cherokee",
@@ -232,6 +255,8 @@
     "Jetour T2",
     "Jetour X70",
     "Jetour X90",
+    "KamAZ 5490",
+    "KamAZ 6520",
     "Kia Carnival",
     "Kia Ceed",
     "Kia Cerato",
@@ -271,6 +296,8 @@
     "Lifan Solano",
     "Lifan X50",
     "Lifan X60",
+    "MAN TGS",
+    "MAN TGX",
     "MG Gloster",
     "MG HS",
     "MG MG3",
@@ -278,6 +305,9 @@
     "MG MG6",
     "MG RX5",
     "MG ZS",
+    "Maserati Ghibli",
+    "Maserati Grecale",
+    "Maserati Levante",
     "Mazda CX-30",
     "Mazda CX-5",
     "Mazda CX-9",
@@ -292,9 +322,12 @@
     "Mercedes-Benz GLC",
     "Mercedes-Benz GLE",
     "Mercedes-Benz GLS",
+    "Mercedes-Benz Maybach S-Class",
     "Mercedes-Benz S-Class",
     "Mercedes-Benz Sprinter",
     "Mercedes-Benz Vito",
+    "Mini Cooper",
+    "Mini Countryman",
     "Mitsubishi ASX",
     "Mitsubishi L200",
     "Mitsubishi Lancer",
@@ -340,6 +373,7 @@
     "Porsche Cayenne",
     "Porsche Macan",
     "Porsche Panamera",
+    "Radar RD6",
     "Ravon Gentra",
     "Ravon Nexia R3",
     "Ravon R4",
@@ -350,13 +384,18 @@
     "Renault Logan",
     "Renault Megane",
     "Renault Sandero",
+    "Rox 01",
     "SITRAK C7H",
     "Saipa Pride",
     "Saipa Quick",
     "Saipa Tiba",
+    "Seat Ateca",
+    "Seat Ibiza",
+    "Seat Leon",
     "Seres M5",
     "Seres M7",
     "Seres M9",
+    "Shacman X3000",
     "Skoda Fabia",
     "Skoda Karoq",
     "Skoda Kodiaq",
@@ -407,6 +446,8 @@
     "Volvo XC40",
     "Volvo XC60",
     "Volvo XC90",
+    "Voyah Dreamer",
+    "Voyah Free",
     "Wuling Hongguang",
     "Wuling Mini",
     "XPeng G6",
@@ -689,6 +730,13 @@
           "make": "Mercedes-Benz",
           "model": "Vito",
           "body_type": "Van"
+        }
+      ],
+      "Maybach S-Class": [
+        {
+          "make": "Mercedes-Benz",
+          "model": "Maybach S-Class",
+          "body_type": "Sedan"
         }
       ]
     },
@@ -3014,6 +3062,216 @@
           "make": "SITRAK",
           "model": "C7H",
           "body_type": "HeavyTruck"
+        }
+      ]
+    },
+    "Jaecoo": {
+      "J7": [
+        {
+          "make": "Jaecoo",
+          "model": "J7",
+          "body_type": "SUV"
+        }
+      ],
+      "J8": [
+        {
+          "make": "Jaecoo",
+          "model": "J8",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Voyah": {
+      "Free": [
+        {
+          "make": "Voyah",
+          "model": "Free",
+          "body_type": "SUV"
+        }
+      ],
+      "Dreamer": [
+        {
+          "make": "Voyah",
+          "model": "Dreamer",
+          "body_type": "MPV"
+        }
+      ]
+    },
+    "Rox": {
+      "01": [
+        {
+          "make": "Rox",
+          "model": "01",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Seat": {
+      "Leon": [
+        {
+          "make": "Seat",
+          "model": "Leon",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Ibiza": [
+        {
+          "make": "Seat",
+          "model": "Ibiza",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Ateca": [
+        {
+          "make": "Seat",
+          "model": "Ateca",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Mini": {
+      "Cooper": [
+        {
+          "make": "Mini",
+          "model": "Cooper",
+          "body_type": "Hatchback"
+        }
+      ],
+      "Countryman": [
+        {
+          "make": "Mini",
+          "model": "Countryman",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "GMC": {
+      "Yukon": [
+        {
+          "make": "GMC",
+          "model": "Yukon",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Cadillac": {
+      "Escalade": [
+        {
+          "make": "Cadillac",
+          "model": "Escalade",
+          "body_type": "SUV"
+        }
+      ],
+      "XT5": [
+        {
+          "make": "Cadillac",
+          "model": "XT5",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Maserati": {
+      "Ghibli": [
+        {
+          "make": "Maserati",
+          "model": "Ghibli",
+          "body_type": "Sedan"
+        }
+      ],
+      "Levante": [
+        {
+          "make": "Maserati",
+          "model": "Levante",
+          "body_type": "SUV"
+        }
+      ],
+      "Grecale": [
+        {
+          "make": "Maserati",
+          "model": "Grecale",
+          "body_type": "SUV"
+        }
+      ]
+    },
+    "Ferrari": {
+      "Roma": [
+        {
+          "make": "Ferrari",
+          "model": "Roma",
+          "body_type": "Coupe"
+        }
+      ],
+      "296": [
+        {
+          "make": "Ferrari",
+          "model": "296",
+          "body_type": "Coupe"
+        }
+      ]
+    },
+    "Bentley": {
+      "Bentayga": [
+        {
+          "make": "Bentley",
+          "model": "Bentayga",
+          "body_type": "SUV"
+        }
+      ],
+      "Continental": [
+        {
+          "make": "Bentley",
+          "model": "Continental",
+          "body_type": "Coupe"
+        }
+      ]
+    },
+    "MAN": {
+      "TGS": [
+        {
+          "make": "MAN",
+          "model": "TGS",
+          "body_type": "HeavyTruck"
+        }
+      ],
+      "TGX": [
+        {
+          "make": "MAN",
+          "model": "TGX",
+          "body_type": "HeavyTruck"
+        }
+      ]
+    },
+    "KamAZ": {
+      "5490": [
+        {
+          "make": "KamAZ",
+          "model": "5490",
+          "body_type": "HeavyTruck"
+        }
+      ],
+      "6520": [
+        {
+          "make": "KamAZ",
+          "model": "6520",
+          "body_type": "HeavyTruck"
+        }
+      ]
+    },
+    "Shacman": {
+      "X3000": [
+        {
+          "make": "Shacman",
+          "model": "X3000",
+          "body_type": "HeavyTruck"
+        }
+      ]
+    },
+    "Radar": {
+      "RD6": [
+        {
+          "make": "Radar",
+          "model": "RD6",
+          "body_type": "Pickup"
         }
       ]
     }
