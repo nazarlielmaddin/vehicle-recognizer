@@ -1,5 +1,39 @@
 # DATASET RESEARCH — verified online 2026-09-23. Nothing assumed.
 
+## MODEL RESEARCH (local, CPU i3, 8GB — measured 2026-09-23/24)
+
+Ranked by accuracy-per-runnable-on-notebook. Slow is OK, wrong is not.
+
+### 1. Our VMMR-tuned head (EfficientNet-B4, 37 makes) — PRIMARY
+- Local file models/vmmr/make_tuned.pt. Val 68.97%, Changan val 11/11.
+- ~1s CPU. The only thing that knows Changan. Keep improving with data.
+
+### 2. SmolVLM-500M-Instruct (Apache-2.0) — REVIEW channel (integrated)
+- ~1GB, load 7s, infer 22-43s CPU. Measured: BMW correct, Changan→"Toyota" (gap).
+- Review-only (never overrides) + agreement micro-boost. transformers==4.49.0
+  REQUIRED (v5 breaks its input format — verified).
+- Verdict: useful second opinion for Western makes, blind on Chinese.
+
+### 3. VMMR-8949 base (EfficientNet-B4) — EXPERT channel (integrated)
+- 94 Western/JP makes + YEAR. Weak on tight crops (0.02-0.12), silent by design
+  below thresholds. No Chinese brands (verified via class_mapping.csv).
+
+### 4. CLIP ViT-B zero-shot — FALLBACK (integrated, full mode only)
+- Fast, broad, weak fine-grained. Never primary.
+
+### REJECTED with reason
+- VehiclePaliGemma (NYUAD): plate OCR, not make/model. Useless here.
+- Qwen2-VL-2B: ~4.5GB (disk 7.6GB free — dangerous) + 8GB RAM risk + minutes/image
+  on i3 + Changan knowledge unproven. Revisit only with GPU.
+- Moondream2: same slot as SmolVLM, redundant after SmolVLM integrated.
+- BLIP-VQA (Samad20988): unknown license, smaller/weaker than SmolVLM. Skip.
+- PaddleClas vehicle: Paddle runtime burden on Windows; models are attribute-level.
+- samyou/vonet-compcars (MIT): ORIENTATION classifier, not make/model.
+- zjs81 EV classifier: ~5 Western EV brands. No Chinese.
+- myneighborh ConvNeXt (cc-by-nc): license blocks production.
+- BoxCars TF .h5: TF runtime + EU cars + dead server.
+- YOLO-cls variants: ImageNet-level, not fine-grained makes.
+
 ## Per-source verdicts
 
 ### CompCars — BENCHMARK ONLY

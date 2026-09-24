@@ -85,6 +85,7 @@ return r.vehicles.map(v=>`<div class="card"><h3>${jointTitle(v)}</h3>
 <div class="btype">🚐 Ban növü: <b>${BODY[v.body_type]||v.body_type}</b> (${(v.body_conf*100).toFixed(1)}%)</div>
 <div>Marka: <b>${v.make}</b> (${(v.make_conf*100).toFixed(1)}%) · Model: <b>${v.model==='Unknown'?'təyin edilmədi':v.model}</b>${v.year?` · İl: <b>${v.year}</b>`:''}</div>
 <div>Rakurs: <b>${VIEW[v.orientation]||v.orientation}</b></div>
+${v.vlm&&v.vlm.make?`<div><small>🔍 VLM rəyi: ${v.vlm.make}${v.vlm.model?` ${v.vlm.model}`:''}</small></div>`:''}
 <div>Əminlik: <b>${(v.confidence*100).toFixed(1)}%</b> · det ${(v.det_conf*100).toFixed(0)}% · NN-oxşarlıq ${v.nn_similarity}</div>
 ${v.ensemble?`<div class="btype">⚖️ Ortaq qərar: <b>${v.ensemble.final}</b> — ${v.ensemble.detector?`YOLO ${v.ensemble.detector.label} ${(v.ensemble.detector.conf*100).toFixed(0)}%`:`detektor sönülüdür (vmmr-only)`}${
 v.ensemble.vmmr_tuned?` · VMMR: ${v.ensemble.vmmr_tuned.label} ${(v.ensemble.vmmr_tuned.conf*100).toFixed(0)}%`:''}${

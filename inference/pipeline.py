@@ -185,6 +185,26 @@ class VehiclePipeline:
             status = "UNCERTAIN"
         body, body_conf = self._body_of(make_name, model_label) \
             if model_label != "Unknown" else ("Unknown", 0.0)
+        # VLM REVIEW (slow, ~30s CPU): only when tuned head is not confident.
+        # Review-only: never overrides; micro-boost on independent agreement.
+        vlm_info: dict | None = None
+        if make_conf < 0.6:
+            try:
+                from .vlm import SmolVLMExpert
+                if not hasattr(self, "_vlm"):
+                    self._vlm = SmolVLMExpert()
+                vlm_info = self._vlm.review(bgr)
+                if vlm_info and vlm_info.get("make"):
+                    from training.taxonomy import normalize_make
+                    vm2 = normalize_make(vlm_info["make"])
+                    if vm2 not in self.full_makes:
+                        vlm_info = {"make": "", "model": "",
+                                    "raw": vlm_info.get("raw", "")}  # not a known make: hide
+                    elif vm2 == make_name and make_name != "Unknown":
+                        make_conf = min(0.9, make_conf + 0.08)
+                        reasons.append(f"VLM independently agrees {make_name} (+0.08)")
+            except Exception as e:
+                vlm_info = {"make": "", "model": "", "raw": f"vlm failed: {str(e)[:80]}"}
         v = {
             "id": 1, "box": [0, 0, w, h], "det_conf": 0.0,
             "evidence_source": "vmmr-tuned",
@@ -203,6 +223,7 @@ class VehiclePipeline:
             "make": make_name, "make_conf": round(float(make_conf), 4),
             "model": model_label, "confidence": round(float(top1), 4),
             "year": year or None,
+            "vlm": vlm_info,
             "body_type": body, "body_conf": body_conf,
             "orientation": "UNKNOWN",
             "status": status,
