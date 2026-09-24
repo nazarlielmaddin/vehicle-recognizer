@@ -74,3 +74,12 @@ api:
 
 pipeline:
   mode: vmmr-only   # vmmr-only | full (legacy multi-stage chain)
+
+# Qwen2.5-VL server expert. DEFAULT OFF on notebook (needs server RAM/GPU).
+# QEYD: Qwen License (Apache deyil) — dövlət istifadəsindən əvvəl hüquqi rəy.
+vlm_server:
+  enabled: false
+  mode: remote        # remote (vLLM, tövsiyə) | local
+  model: "Qwen/Qwen2.5-VL-7B-Instruct"   # 3B / 7B / 32B
+  endpoint: "http://127.0.0.1:8001/v1"
+  when: weak          # weak (make_conf<0.6) | always

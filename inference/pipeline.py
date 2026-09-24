@@ -191,9 +191,17 @@ class VehiclePipeline:
         if make_conf < 0.6:
             try:
                 from .vlm import SmolVLMExpert
+                from concurrent.futures import ThreadPoolExecutor
                 if not hasattr(self, "_vlm"):
                     self._vlm = SmolVLMExpert()
-                vlm_info = self._vlm.review(bgr)
+                # watchdog: a stuck model must never hang inference (>4 min)
+                with ThreadPoolExecutor(max_workers=1) as ex:
+                    fut = ex.submit(self._vlm.review, bgr)
+                    try:
+                        vlm_info = fut.result(timeout=240)
+                    except Exception:
+                        vlm_info = {"make": "", "model": "",
+                                    "raw": "vlm timeout (240s) — skipped"}
                 if vlm_info and vlm_info.get("make"):
                     from training.taxonomy import normalize_make
                     vm2 = normalize_make(vlm_info["make"])
@@ -205,6 +213,27 @@ class VehiclePipeline:
                         reasons.append(f"VLM independently agrees {make_name} (+0.08)")
             except Exception as e:
                 vlm_info = {"make": "", "model": "", "raw": f"vlm failed: {str(e)[:80]}"}
+        # QWEN2.5-VL SERVER EXPERT (config-gated, default OFF on notebook).
+        vlm_qwen: dict | None = None
+        vs = self.cfg.get("vlm_server", {})
+        if vs.get("enabled"):
+            try:
+                from .vlm_server import QwenVLExpert
+                if not hasattr(self, "_qwen"):
+                    self._qwen = QwenVLExpert(
+                        model=vs.get("model", "Qwen/Qwen2.5-VL-7B-Instruct"),
+                        mode=vs.get("mode", "remote"),
+                        endpoint=vs.get("endpoint", "http://127.0.0.1:8001/v1"))
+                if vs.get("when", "weak") == "always" or make_conf < 0.6:
+                    vlm_qwen = self._qwen.review(bgr)
+                    if vlm_qwen and vlm_qwen.get("make"):
+                        from training.taxonomy import normalize_make as _nm2
+                        if _nm2(vlm_qwen["make"]) == make_name and make_name != "Unknown":
+                            make_conf = min(0.95, make_conf + 0.1)
+                            reasons.append(f"Qwen2.5-VL agrees {make_name} (+0.10)")
+            except Exception as e:
+                vlm_qwen = {"make": "", "model": "", "year": "", "body": "",
+                            "raw": f"qwen-vl failed: {str(e)[:80]}", "engine": "qwen2.5-vl"}
         v = {
             "id": 1, "box": [0, 0, w, h], "det_conf": 0.0,
             "evidence_source": "vmmr-tuned",
@@ -224,6 +253,7 @@ class VehiclePipeline:
             "model": model_label, "confidence": round(float(top1), 4),
             "year": year or None,
             "vlm": vlm_info,
+            "vlm_server": vlm_qwen,
             "body_type": body, "body_conf": body_conf,
             "orientation": "UNKNOWN",
             "status": status,
@@ -349,9 +379,11 @@ class VehiclePipeline:
         for i, c in enumerate(crops):
             rgb = _prep_rgb(c["full"], self.cfg["image"]["classifier_size"][0])
             zs_used = False
-            # encode once for all zero-shot heads (was 4 separate encodes)
+            # encode once for all zero-shot heads (was 4 separate encodes).
+            # vmmr-only mode needs none of them — skip (saves ~350MB RAM).
             zfeat = None
-            if not (self.make_clf.available and self.model_clf.available
+            if self.mode != "vmmr-only" and not (
+                    self.make_clf.available and self.model_clf.available
                     and self.body_clf.available and self.view_clf.available):
                 try:
                     zfeat = self.zero_shot.encode_image(c["full"])

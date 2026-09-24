@@ -24,9 +24,16 @@ class SmolVLMExpert:
         if self._model is None:
             import torch
             from transformers import AutoProcessor, AutoModelForVision2Seq
-            self._proc = AutoProcessor.from_pretrained(self.model_id)
-            self._model = AutoModelForVision2Seq.from_pretrained(
-                self.model_id, torch_dtype=torch.float32)
+            try:
+                # offline-first: cached weights must never hit the network
+                self._proc = AutoProcessor.from_pretrained(self.model_id,
+                                                           local_files_only=True)
+                self._model = AutoModelForVision2Seq.from_pretrained(
+                    self.model_id, torch_dtype=torch.float32, local_files_only=True)
+            except Exception:
+                self._proc = AutoProcessor.from_pretrained(self.model_id)
+                self._model = AutoModelForVision2Seq.from_pretrained(
+                    self.model_id, torch_dtype=torch.float32)
             self._model.eval()
         return self._model
 
