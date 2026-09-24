@@ -86,7 +86,8 @@ return r.vehicles.map(v=>`<div class="card"><h3>${jointTitle(v)}</h3>
 <div>Marka: <b>${v.make}</b> (${(v.make_conf*100).toFixed(1)}%) · Model: <b>${v.model==='Unknown'?'təyin edilmədi':v.model}</b>${v.year?` · İl: <b>${v.year}</b>`:''}</div>
 <div>Rakurs: <b>${VIEW[v.orientation]||v.orientation}</b></div>
 <div>Əminlik: <b>${(v.confidence*100).toFixed(1)}%</b> · det ${(v.det_conf*100).toFixed(0)}% · NN-oxşarlıq ${v.nn_similarity}</div>
-${v.ensemble?`<div class="btype">⚖️ Ortaq qərar: <b>${v.ensemble.final}</b> — YOLO ${v.ensemble.detector.label} ${(v.ensemble.detector.conf*100).toFixed(0)}%${
+${v.ensemble?`<div class="btype">⚖️ Ortaq qərar: <b>${v.ensemble.final}</b> — ${v.ensemble.detector?`YOLO ${v.ensemble.detector.label} ${(v.ensemble.detector.conf*100).toFixed(0)}%`:`detektor sönülüdür (vmmr-only)`}${
+v.ensemble.vmmr_tuned?` · VMMR: ${v.ensemble.vmmr_tuned.label} ${(v.ensemble.vmmr_tuned.conf*100).toFixed(0)}%`:''}${
 v.ensemble.make_trained?` · Təlim-v2: ${v.ensemble.make_trained.label} ${(v.ensemble.make_trained.conf*100).toFixed(0)}%`:''}${
 v.ensemble.make_aux?` · Təlim-v1: ${v.ensemble.make_aux.label} ${(v.ensemble.make_aux.conf*100).toFixed(0)}%`:''}${
 v.ensemble.vmmr?` · VMMR: ${v.ensemble.vmmr.make} ${v.ensemble.vmmr.model} ${(v.ensemble.vmmr.conf*100).toFixed(0)}%`:''}${
@@ -96,7 +97,7 @@ v.ensemble.joint?' · <b>RAZILAŞMA ✅</b>':' · fikir ayrılığı'}</div>`:''
 ${v.abstain_reasons.length?`<small>⚠ ${v.abstain_reasons.join('; ')}</small>`:''}
 ${r.annotated_jpeg_b64?`<img class="annot" src="data:image/jpeg;base64,${r.annotated_jpeg_b64}"/>`:''}
 </div>`).join('');}
-function show(rs){out.innerHTML=rs.map(showOne).join('');}
+function show(rs){out.innerHTML=rs.map(r=>{try{return showOne(r)}catch(e){return `<div class="card">⚠ Nəticə göstərilə bilmədi: ${e&&e.message||e}</div>`}}).join('');}
 </script>
 </body>
 </html>
